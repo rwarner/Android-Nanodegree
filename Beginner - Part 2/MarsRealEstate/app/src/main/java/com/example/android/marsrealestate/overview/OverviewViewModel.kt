@@ -17,6 +17,7 @@
 
 package com.example.android.marsrealestate.overview
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,7 +56,7 @@ class OverviewViewModel : ViewModel() {
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                _response.value = response.toString()
+                _response.value = response.body()
             }
         })
     }
