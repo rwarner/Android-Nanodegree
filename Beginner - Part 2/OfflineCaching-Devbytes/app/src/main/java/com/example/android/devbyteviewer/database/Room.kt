@@ -17,11 +17,11 @@
 
 package com.example.android.devbyteviewer.database
 
+import android.content.Context
+import android.provider.ContactsContract
+import android.provider.MediaStore
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 
 @Dao
@@ -30,5 +30,30 @@ interface VideoDao {
     fun getVideos(): LiveData<List<DatabaseVideo>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun instertAll(vararg videos: DatabaseVideo)
+    fun insertAll(vararg videos: DatabaseVideo)
+
+}
+
+@Database(entities = [DatabaseVideo::class], version = 1)
+abstract class VideosDatabase: RoomDatabase() {
+    abstract val videoDao: VideoDao
+}
+
+
+// Singleton pattern to access the database through one instance
+private lateinit var INSTANCE: VideosDatabase
+
+fun getDatabase(context: Context): VideosDatabase {
+
+    // Thread safe
+    synchronized(VideosDatabase::class.java) {
+        // Kotlin check for if the variable has been initialized already, if not then create it
+        if(!::INSTANCE.isInitialized) {
+            INSTANCE = Room.databaseBuilder(context.applicationContext,
+                VideosDatabase::class.java,
+                "videos").build()
+        }
+    }
+
+    return INSTANCE
 }
