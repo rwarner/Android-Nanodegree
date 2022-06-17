@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.android.gdgfinder.R
+import com.example.android.gdgfinder.databinding.HomeFragmentBinding
 
 class HomeFragment : Fragment() {
 
@@ -21,8 +24,21 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.home_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        return view
+        val binding = HomeFragmentBinding.inflate(inflater)
+        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        binding.viewModel = viewModel
+
+        viewModel.navigateToSearch.observe(viewLifecycleOwner,
+            Observer<Boolean> { shouldNavigate ->
+                if(shouldNavigate == true) {
+                    val navController = binding.root.findNavController()
+                    navController.navigate(R.id.action_homeFragment_to_gdgListFragment)
+                    viewModel.onNavigatedToSearch()
+                }
+            }
+        )
+
+        return binding.root
     }
 }
