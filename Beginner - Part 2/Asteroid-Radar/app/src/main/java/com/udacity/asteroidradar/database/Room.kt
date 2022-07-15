@@ -1,20 +1,3 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.udacity.asteroidradar.database
 
 import android.content.Context
@@ -24,17 +7,31 @@ import androidx.room.*
 
 @Dao
 interface AsteroidDao {
-    @Query("select * from databaseasteroid")
+    @Query("select * from asteroids_table")
     fun getAsteroids(): LiveData<List<DatabaseAsteroid>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg videos: DatabaseAsteroid)
+    fun insertAllAsteroids(vararg asteroids: DatabaseAsteroid)
 
 }
 
-@Database(entities = [DatabaseAsteroid::class], version = 1)
+@Dao
+interface PictureOfTheDayDao {
+
+    @Query("select * from potd_table")
+    fun getAllPictureOfTheDay(): LiveData<List<DatabasePictureOfTheDay>>
+
+//    @Query("select * from potd_table")
+//    fun getLatestPictureOfTheDay(): LiveData<List<DatabasePictureOfTheDay>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertPotd(vararg pictureOfTheDay: DatabasePictureOfTheDay)
+}
+
+@Database(entities = [DatabaseAsteroid::class, DatabasePictureOfTheDay::class], version = 1)
 abstract class AsteroidsDatabase: RoomDatabase() {
     abstract val asteroidDao: AsteroidDao
+    abstract val potdDao: PictureOfTheDayDao
 }
 
 
@@ -49,7 +46,7 @@ fun getDatabase(context: Context): AsteroidsDatabase {
         if(!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 AsteroidsDatabase::class.java,
-                "asteroids").build()
+                "maindb").build()
         }
     }
 

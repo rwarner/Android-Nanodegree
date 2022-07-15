@@ -5,6 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
+import com.udacity.asteroidradar.repository.PictureOfTheDayRepository
 import retrofit2.HttpException
 
 class RefreshDataWorker(appContext: Context, params: WorkerParameters): CoroutineWorker(appContext, params) {
@@ -15,10 +16,12 @@ class RefreshDataWorker(appContext: Context, params: WorkerParameters): Coroutin
 
     override suspend fun doWork(): Result {
         val database = getDatabase(applicationContext)
-        val repository = AsteroidRepository(database)
+        val asteroidRepository = AsteroidRepository(database)
+        val potdRepository = PictureOfTheDayRepository(database)
 
         return try {
-            repository.refreshAsteroids()
+            asteroidRepository.refreshAsteroids()
+            potdRepository.refreshPictureOfTheDay()
             Result.success()
         } catch(e: HttpException) {
             Result.retry()

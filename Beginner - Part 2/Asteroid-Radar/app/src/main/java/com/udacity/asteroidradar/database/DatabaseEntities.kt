@@ -19,12 +19,13 @@ package com.udacity.asteroidradar.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.udacity.asteroidradar.Asteroid
+import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.domain.PictureOfTheDay
 
 /**
  * Asteroid object
  */
-@Entity
+@Entity(tableName = "asteroids_table")
 data class DatabaseAsteroid constructor(
     @PrimaryKey
     val id: Long,
@@ -53,4 +54,38 @@ fun List<DatabaseAsteroid>.asDomainModel(): List<Asteroid> {
             isPotentiallyHazardous = it.isPotentiallyHazardous
         )
     }
+}
+
+
+/**
+ * Picture Of The Day Object
+ */
+@Entity(tableName = "potd_table")
+data class DatabasePictureOfTheDay constructor(
+    @PrimaryKey
+    val media_type: String,
+    val title: String,
+    val url: String
+)
+
+/**
+ * Converts database objects to domain objects
+ */
+@JvmName("asDomainModelDatabasePictureOfTheDay")
+fun List<DatabasePictureOfTheDay>.asDomainModel(): PictureOfTheDay? {
+
+    val dbPotd = map {
+        PictureOfTheDay (
+            media_type = it.media_type,
+            title = it.title,
+            url = it.url
+        )
+    }
+
+    if(dbPotd.isNotEmpty()) {
+        return dbPotd[0]
+    }
+
+    return null
+
 }

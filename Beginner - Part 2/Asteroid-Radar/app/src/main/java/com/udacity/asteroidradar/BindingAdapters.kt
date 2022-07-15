@@ -4,21 +4,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.udacity.asteroidradar.main.NasaApiStatus
 
 @BindingAdapter("imageUrl")
 fun loadPictureOfTheDayImage(view: ImageView, imageUrl: String?) {
     Picasso.with(view.context)
         .load(imageUrl)
         .into(view)
-}
-
-@BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<Asteroid>?) {
-    val adapter = recyclerView.adapter as AsteroidAdapter
-    adapter.submitList(data)
 }
 
 @BindingAdapter("statusIcon")
@@ -57,19 +49,11 @@ fun bindTextViewToDisplayVelocity(textView: TextView, number: Double) {
     textView.text = String.format(context.getString(R.string.km_s_unit_format), number)
 }
 
-@BindingAdapter("nasaApiStatus")
-fun bindStatus(statusImageView: ImageView, status: NasaApiStatus?) {
-    when(status) {
-        NasaApiStatus.LOADING -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.loading_animation)
-        }
-        NasaApiStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
-        }
-        NasaApiStatus.DONE -> {
-            statusImageView.visibility = View.GONE
-        }
-    }
+
+/**
+ * Binding adapter used to hide the spinner once data is available
+ */
+@BindingAdapter("goneIfNotNull")
+fun goneIfNotNull(view: View, it: Any?) {
+    view.visibility = if (it != null) View.GONE else View.VISIBLE
 }

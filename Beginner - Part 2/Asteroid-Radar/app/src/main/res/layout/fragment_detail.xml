@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="asteroid"
-            type="com.udacity.asteroidradar.Asteroid" />
+            type="com.udacity.asteroidradar.domain.Asteroid" />
+        <variable
+            name="viewModel"
+            type="com.udacity.asteroidradar.viewmodels.AsteroidViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
