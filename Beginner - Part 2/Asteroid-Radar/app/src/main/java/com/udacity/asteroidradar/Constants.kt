@@ -5,5 +5,5 @@ object Constants {
     const val DEFAULT_END_DATE_DAYS = 7
     const val BASE_URL = "https://api.nasa.gov/"
     const val LOG_TAG = "Asteroid Radar App"
-    const val API_KEY = "Cne1K11gMbDjS4gXimNTNTxoWrC2IhGxbKhxRRNG"
+    const val API_KEY = ""
 }
