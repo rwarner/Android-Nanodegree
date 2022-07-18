@@ -1,32 +1,17 @@
-/*
- * Copyright 2018, The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
-
 package com.udacity.asteroidradar.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.switchMap
 import com.udacity.asteroidradar.Constants
-import com.udacity.asteroidradar.network.AsteroidApi
-import com.udacity.asteroidradar.network.parseAsteroidsJsonResult
 import com.udacity.asteroidradar.database.AsteroidsDatabase
 import com.udacity.asteroidradar.database.asDomainModel
 import com.udacity.asteroidradar.domain.Asteroid
+import com.udacity.asteroidradar.network.AsteroidApi
 import com.udacity.asteroidradar.network.NetworkAsteroidContainer
 import com.udacity.asteroidradar.network.asDatabaseModel
+import com.udacity.asteroidradar.network.parseAsteroidsJsonResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -39,11 +24,35 @@ import java.util.*
  */
 class AsteroidRepository(private val database: AsteroidsDatabase) {
 
+    private val filterSelection = MutableLiveData<String>()
+
     /**
      * List of Asteroids that can be shown on the screen
      */
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAsteroids(SimpleDateFormat("yyyy-MM-dd").format(Date()))) {
+    private val todayAsteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getTodayAsteroids(SimpleDateFormat("yyyy-MM-dd").format(Date()))) {
         it.asDomainModel()
+    }
+    private val weekAsteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getWeekAsteroids(SimpleDateFormat("yyyy-MM-dd").format(Date()))) {
+        it.asDomainModel()
+    }
+    private val allAsteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAllAsteroids()) {
+        it.asDomainModel()
+    }
+
+
+    val filteredAsteroids: LiveData<List<Asteroid>> = filterSelection.switchMap {
+        when(it) {
+            "today" -> todayAsteroids
+            "week" -> weekAsteroids
+            "all" -> allAsteroids
+            else -> {
+                allAsteroids
+            }
+        }
+    }
+
+    fun setFilter(filter: String) {
+        filterSelection.value = filter
     }
 
 

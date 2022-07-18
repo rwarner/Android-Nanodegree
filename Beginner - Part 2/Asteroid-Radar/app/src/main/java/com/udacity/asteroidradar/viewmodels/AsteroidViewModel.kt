@@ -2,10 +2,7 @@ package com.udacity.asteroidradar.viewmodels
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.udacity.asteroidradar.database.getDatabase
 import com.udacity.asteroidradar.repository.AsteroidRepository
 import com.udacity.asteroidradar.repository.PictureOfTheDayRepository
@@ -24,7 +21,7 @@ class AsteroidViewModel(application: Application) : AndroidViewModel(application
     private val asteroidRepository = AsteroidRepository(database)
     private val pictureOfTheDayRepository = PictureOfTheDayRepository(database)
 
-    val listOfAsteroids = asteroidRepository.asteroids
+    val listOfAsteroids = asteroidRepository.filteredAsteroids
 
     val pictureOfTheDay = pictureOfTheDayRepository.pictureOfTheDay
 
@@ -34,6 +31,7 @@ class AsteroidViewModel(application: Application) : AndroidViewModel(application
             // Issues running this with airplane mode or no network
             // Put in a try catch to catch these situations and handle them appropriately
             try {
+                asteroidRepository.setFilter("all")
                 asteroidRepository.refreshAsteroids()
                 pictureOfTheDayRepository.refreshPictureOfTheDay()
             } catch (e: UnknownHostException) { // Handle no internet
@@ -47,6 +45,10 @@ class AsteroidViewModel(application: Application) : AndroidViewModel(application
             }
         }
 
+    }
+
+    fun setFilter(filterSelected: String) {
+        asteroidRepository.setFilter(filterSelected)
     }
 
     /**

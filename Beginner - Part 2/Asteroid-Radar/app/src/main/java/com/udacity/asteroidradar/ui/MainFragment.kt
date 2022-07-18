@@ -3,8 +3,11 @@ package com.udacity.asteroidradar.ui
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.LayoutRes
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -50,13 +53,12 @@ class MainFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.listOfAsteroids.observe(
-            viewLifecycleOwner,
-            Observer<List<Asteroid>> { asteroids ->
-                asteroids?.apply {
-                    viewModelAdapter?.asteroids = asteroids
-                }
-            })
+        viewModel.listOfAsteroids.observe(viewLifecycleOwner) { asteroids ->
+            asteroids?.apply {
+                viewModelAdapter?.asteroids = asteroids
+            }
+        }
+
     }
 
     /**
@@ -92,9 +94,7 @@ class MainFragment : Fragment() {
 
         viewModelAdapter = AsteroidAdapter(AsteroidClick {
             // When an asteroid is clicked this block will be called by AsteroidAdapter
-            if ( it != null ) {
-                this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
-            }
+            this.findNavController().navigate(MainFragmentDirections.actionShowDetail(it))
 
         })
 
@@ -102,6 +102,30 @@ class MainFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
+
+        // The usage of an interface lets you inject your own implementation
+        val menuHost: MenuHost = requireActivity()
+
+        // Add menu items without using the Fragment Menu APIs
+        // Note how we can tie the MenuProvider to the viewLifecycleOwner
+        // and an optional Lifecycle.State (here, RESUMED) to indicate when
+        // the menu should be visible
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                // Add menu items here
+                menuInflater.inflate(R.menu.main_overflow_menu, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                // Handle the menu selection
+                when(menuItem.itemId) {
+                    R.id.show_all_menu -> viewModel.setFilter("all")
+                    R.id.show_today_menu -> viewModel.setFilter("today")
+                    R.id.show_week_menu -> viewModel.setFilter("week")
+                }
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
 
         return binding.root
     }
