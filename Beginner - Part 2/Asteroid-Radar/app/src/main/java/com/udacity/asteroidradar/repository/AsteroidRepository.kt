@@ -42,7 +42,7 @@ class AsteroidRepository(private val database: AsteroidsDatabase) {
     /**
      * List of Asteroids that can be shown on the screen
      */
-    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAsteroids()) {
+    val asteroids: LiveData<List<Asteroid>> = Transformations.map(database.asteroidDao.getAsteroids(SimpleDateFormat("yyyy-MM-dd").format(Date()))) {
         it.asDomainModel()
     }
 
