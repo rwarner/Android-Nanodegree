@@ -41,6 +41,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     // Create the content intent for the notification, which launches
     // this activity
 
+    val contentIntent = Intent(applicationContext, MainActivity::class.java)
+
+    val contentPendingIntent = PendingIntent.getActivity(
+        applicationContext,
+        NOTIFICATION_ID,
+        contentIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+    )
     // Build the notification
     val builder = NotificationCompat.Builder(
         applicationContext,
@@ -48,9 +56,14 @@ fun NotificationManager.sendNotification(messageBody: String, applicationContext
     ).setSmallIcon(R.drawable.cooked_egg)
         .setContentTitle(applicationContext.getString(R.string.notification_title))
         .setContentText(messageBody)
+        .setContentIntent(contentPendingIntent)
+        .setAutoCancel(true)
 
     notify(NOTIFICATION_ID, builder.build())
 
 }
 
 // TODO: Step 1.14 Cancel all notifications
+fun NotificationManager.cancelNotifications() {
+    cancelAll()
+}
