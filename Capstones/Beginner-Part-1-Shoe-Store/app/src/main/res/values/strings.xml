@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">ShoeStore</string>
+
+    <!-- Login -->
+    <string name="Password">Password</string>
+    <string name="emailTextView">Email</string>
+    <string name="LoginButton">Login</string>
+    <string name="email_edit_hint">bob@shoestore.com</string>
+    <string name="password_edit_hint">******</string>
+    <string name="create_account_button">Create Account</string>
+
+    <!-- Welcome -->
+    <string name="welcome_edit_text">Welcome to the Shoe Store</string>
+    <string name="welcome_intro_text_view">Click the button below to continue</string>
+    <string name="welcome_next_button">Next</string>
+
+    <!-- Instructions -->
+    <string name="instructions_header_text_view">Instructions</string>
+    <string name="instructions_text_view">These are some instructions to inform the user of how to use this application</string>
+    <string name="instructions_next_button">Next</string>
+
+    <!-- Shoe Detail -->
+    <string name="shoe_name_text_view">Shoe Name:</string>
+    <string name="company_text_view">Company:</string>
+    <string name="shoe_size_text_view">Shoe Size:</string>
+    <string name="description_text_view">Description:</string>
+    <string name="shoe_name_edit_text_hint">Fly knit sevens</string>
+    <string name="company_edit_text_hint">Adidas</string>
+    <string name="shoe_size_edit_text_hint">10</string>
+    <string name="description_edit_text_hint">Colorful shoe.</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="save_button">Save</string>
+
+    <!-- Fragment Titles -->
+    <string name="login_fragment_title">Login</string>
+    <string name="welcome_fragment_title">Welcome</string>
+    <string name="instructions_fragment_title">Instructions</string>
+    <string name="shoe_list_fragment_title">Shoe Store</string>
+    <string name="shoe_detail_fragment_title">Shoe Details</string>
+    <string name="overflow_menu_logout_title">Logout</string>
+
+    <!-- Shoe List Item -->
+    <string name="listitem_shoe_sample_text_view">New Balance</string>
+    <string name="listitem_size_text_view">Size:</string>
+    <string name="listitem_shoe_size_sample">5</string>
+    <string name="listitem_shoe_company_text_view">Company:</string>
+    <string name="listitem_shoe_company_sample">New Balance</string>
+</resources>

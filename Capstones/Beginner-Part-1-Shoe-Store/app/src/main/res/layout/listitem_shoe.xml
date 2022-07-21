@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp">
+
+    <TextView
+        android:id="@+id/listitem_shoe_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:text="@string/listitem_shoe_sample_text_view"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/listitem_size_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="175dp"
+        android:text="@string/listitem_size_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/listitem_size_actual_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/listitem_shoe_size_sample"
+        app:layout_constraintStart_toEndOf="@+id/listitem_size_text_view"
+        app:layout_constraintTop_toTopOf="@+id/listitem_size_text_view" />
+
+    <TextView
+        android:id="@+id/listitem_shoe_company_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/listitem_shoe_company_text_view"
+        app:layout_constraintStart_toStartOf="@+id/listitem_size_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/listitem_size_text_view" />
+
+    <TextView
+        android:id="@+id/listitem_shoe_actual_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/listitem_shoe_company_sample"
+        app:layout_constraintStart_toEndOf="@+id/listitem_shoe_company_textview"
+        app:layout_constraintTop_toTopOf="@+id/listitem_shoe_company_textview" />
+</androidx.constraintlayout.widget.ConstraintLayout>
