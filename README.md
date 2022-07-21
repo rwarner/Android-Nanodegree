@@ -5,6 +5,8 @@
 A place to store all my completed lessons for reference online.
 
 ### Good References
+
+## Beginner Part 1
 --------
 
 > [Track My Sleep - Recycler View w/o Header](https://github.com/rwarner/Android-Nanodegree-Lessons/tree/main/Beginner%20-%20Part%202/SleepTrackerRecyclerView_NoHeader)
@@ -32,6 +34,14 @@ A place to store all my completed lessons for reference online.
 > - Simplistic Data Binding (Not Live Data)
 > - Example of binding.apply {}
 --------
-### Personal Submissions
 
-[Shoe Store](https://github.com/rwarner/Nanodegree-Shoe-Store)
+## Beginner Part 2
+--------
+TBD
+--------
+
+
+### Capstone Submissions
+
+[Shoe Store](https://github.com/rwarner/Android-Nanodegree/tree/main/Capstones/Beginner-Part-1-Shoe-Store)
+[Asteroid Radar](https://github.com/rwarner/Android-Nanodegree/tree/main/Capstones/Beginner-Part-2-Asteroid-Radar)
