@@ -6,7 +6,7 @@ A place to store all my completed lessons for reference online.
 
 ### Good References
 
-## Beginner Part 1
+#### Beginner Part 1
 --------
 
 > [Track My Sleep - Recycler View w/o Header](https://github.com/rwarner/Android-Nanodegree-Lessons/tree/main/Beginner%20-%20Part%202/SleepTrackerRecyclerView_NoHeader)
@@ -35,7 +35,7 @@ A place to store all my completed lessons for reference online.
 > - Example of binding.apply {}
 --------
 
-## Beginner Part 2
+#### Beginner Part 2
 --------
 TBD
 --------
