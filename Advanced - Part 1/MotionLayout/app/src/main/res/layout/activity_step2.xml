@@ -71,4 +71,5 @@
             android:alpha="0.8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.motion.widget.MotionLayout>
