@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="LoadingButton">
-<!--   TODO: create custom attributes for the view-->
+    <declare-styleable name="DownloadButton">
+        <attr name="downloading" format="boolean"/>
+        <attr name="completed" format="boolean"/>
     </declare-styleable>
 </resources>

@@ -8,4 +8,60 @@
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail">
 
+    <TextView
+        android:id="@+id/tvLabelFileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/detail_label_file_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tvFileName"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvLabelFileName"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelFileName"
+        android:textSize="16sp"
+        tools:text="@string/radio_option_1" />
+
+    <TextView
+        android:id="@+id/tvLabelStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/detail_label_status"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        app:layout_constraintStart_toStartOf="@+id/tvLabelFileName"
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelFileName" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvFileName"
+        app:layout_constraintStart_toStartOf="@+id/tvFileName"
+        app:layout_constraintTop_toTopOf="@+id/tvLabelStatus"
+        android:text="@string/detail_success" />
+
+
+    <Button
+        android:id="@+id/btnOk"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/detail_button_ok"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
