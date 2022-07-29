@@ -1,23 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:layoutDescription="@xml/detail_motion"
     tools:context=".DetailActivity"
     tools:showIn="@layout/activity_detail">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/labelStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.08" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/labelTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="54dp" />
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/labelOffScreen"
+        android:translationX="-600dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0" />
+
 
     <TextView
         android:id="@+id/tvLabelFileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="50dp"
         android:text="@string/detail_label_file_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/labelStart"
+        app:layout_constraintTop_toTopOf="@id/labelTop" />
 
 
     <TextView
@@ -34,7 +57,6 @@
         android:id="@+id/tvLabelStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="@string/detail_label_status"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintStart_toStartOf="@+id/tvLabelFileName"
@@ -44,11 +66,11 @@
         android:id="@+id/tvStatus"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:text="@string/detail_success"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/tvFileName"
         app:layout_constraintStart_toStartOf="@+id/tvFileName"
-        app:layout_constraintTop_toTopOf="@+id/tvLabelStatus"
-        android:text="@string/detail_success" />
+        app:layout_constraintTop_toTopOf="@+id/tvLabelStatus" />
 
 
     <Button
@@ -64,4 +86,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

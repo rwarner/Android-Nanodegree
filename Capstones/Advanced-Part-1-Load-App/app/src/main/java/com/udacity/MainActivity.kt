@@ -43,9 +43,6 @@ class MainActivity : AppCompatActivity() {
         download_button.isClickable = true
         download_button.setLoadingState(ButtonState.Click)
 
-        // Register for our downloads being completed
-        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
-
         // Create a notification channel to send our notifications to
         createChannel(CHANNEL_ID, "Download Notifications")
 
@@ -167,5 +164,17 @@ class MainActivity : AppCompatActivity() {
 
             notificationManager.createNotificationChannel(notificationChannel)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(receiver)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // Register for our downloads being completed
+        registerReceiver(receiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))
     }
 }
