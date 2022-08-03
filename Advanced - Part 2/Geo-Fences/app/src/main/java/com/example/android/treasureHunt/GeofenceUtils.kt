@@ -76,7 +76,13 @@ internal object GeofencingConstants {
            "union_square",
             R.string.union_square_hint,
             R.string.union_square_location,
-            LatLng(37.788151, -122.407570))
+            LatLng(37.788151, -122.407570)),
+
+        LandmarkDataObject(
+            "lombard_street",
+            R.string.lombard_street_hint,
+            R.string.lombard_street_location,
+            LatLng(37.801205, -122.426752)),
     )
 
     val NUM_LANDMARKS = LANDMARK_DATA.size
