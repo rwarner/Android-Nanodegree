@@ -3,6 +3,7 @@ package com.example.android.architecture.blueprints.todoapp.statistics
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import junit.framework.Assert.assertEquals
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 internal class StatisticsUtilsTest {
@@ -22,15 +23,16 @@ internal class StatisticsUtilsTest {
 
     @Test
     fun getActiveAndCompletedStats_noActive_returnsZeroHundred() {
+        // GIVEN a list of tasks with a single, active, task
         val tasks = listOf(
             Task("title", "desc", isCompleted = true)
         )
-        // When the list of tasks is computed with a completed task
+        // WHEN you call getActiveAndCompletedStats
         val result = getActiveAndCompletedStats(tasks)
 
-        // Then the percentages are 0 and 100
-        assertEquals(result.activeTasksPercent, 0f)
-        assertEquals(result.completedTasksPercent,100f)
+        // THEN there are 0% completed tasks and 100% active tasks
+        assertThat(result.activeTasksPercent, `is`(0f))
+        assertThat(result.completedTasksPercent, `is`(100f))
     }
 
     @Test
