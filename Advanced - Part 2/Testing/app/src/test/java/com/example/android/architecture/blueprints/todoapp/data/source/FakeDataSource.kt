@@ -1,9 +1,8 @@
-package com.example.android.architecture.blueprints.todoapp.data.src
+package com.example.android.architecture.blueprints.todoapp.data.source
 
 import androidx.lifecycle.LiveData
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 
 class FakeDataSource(var tasks: MutableList<Task>? = mutableListOf()) : TasksDataSource {
     override fun observeTasks(): LiveData<Result<List<Task>>> {
