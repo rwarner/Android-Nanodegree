@@ -118,10 +118,10 @@ class TaskDetailViewModel(
     }
 
     @Suppress("UNCHECKED_CAST")
-    class TasksViewModelFactory (
+    class TaskDetailViewModelFactory (
         private val tasksRepository: TasksRepository
     ) : ViewModelProvider.NewInstanceFactory() {
         override fun <T : ViewModel> create(modelClass: Class<T>) =
-            (TasksViewModel(tasksRepository) as T)
+            (TaskDetailViewModel(tasksRepository) as T)
     }
 }

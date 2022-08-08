@@ -46,7 +46,7 @@ class TaskDetailFragment : Fragment() {
 
 
     private val viewModel by viewModels<TaskDetailViewModel>() {
-        TasksViewModel.TasksViewModelFactory(DefaultTasksRepository.getRepository(requireActivity().application))
+        TaskDetailViewModel.TaskDetailViewModelFactory(DefaultTasksRepository.getRepository(requireActivity().application))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
