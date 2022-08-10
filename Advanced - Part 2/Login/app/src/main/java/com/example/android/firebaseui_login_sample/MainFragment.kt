@@ -68,6 +68,7 @@ class MainFragment : Fragment() {
             val action = MainFragmentDirections.actionMainFragmentToSettingsFragment()
             findNavController().navigate(action)
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
