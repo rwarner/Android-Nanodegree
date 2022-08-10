@@ -1,5 +1,6 @@
 package com.example.android.architecture.blueprints.todoapp.data.source
 
+import com.example.android.architecture.blueprints.todoapp.MainCoroutineRule
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Task
 import kotlinx.coroutines.Dispatchers
@@ -8,9 +9,16 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.IsEqual
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class DefaultTasksRepositoryTest {
+
+    // Set the main coroutines dispatcher for unit testing.
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    var mainCoroutineRule = MainCoroutineRule()
+
     private val task1 = Task("Title1", "Description1")
     private val task2 = Task("Title2", "Description2")
     private val task3 = Task("Title3", "Description3")
@@ -28,16 +36,15 @@ internal class DefaultTasksRepositoryTest {
     fun createRepository() {
         tasksRemoteDataSource = FakeDataSource(remoteTasks.toMutableList())
         tasksLocalDataSource = FakeDataSource(localTasks.toMutableList())
-
+        // Get a reference to the class under test.
         tasksRepository = DefaultTasksRepository(
-            tasksRemoteDataSource,
-            tasksLocalDataSource,
-            Dispatchers.Unconfined)
+            tasksRemoteDataSource, tasksLocalDataSource, Dispatchers.Main
+        )
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun getTasks_requestAllTasksFromRemoteDataSource() = runBlockingTest {
+    fun getTasks_requestsAllTasksFromRemoteDataSource() = mainCoroutineRule.runBlockingTest {
         // when tasks are requested from the task repository
         val tasks = tasksRepository.getTasks(true) as Result.Success
 
