@@ -25,6 +25,11 @@ android {
         enabled = true
         enabledForTests = true
     }
+
+    testOptions.unitTests {
+        includeAndroidResources = true
+        returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -86,6 +91,8 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
 
     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.4.0"
+    implementation "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+
 
 
     // Testing code should not be included in the main code.
