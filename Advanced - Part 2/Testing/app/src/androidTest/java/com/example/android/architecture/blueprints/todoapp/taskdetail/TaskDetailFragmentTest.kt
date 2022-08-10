@@ -20,6 +20,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.core.IsNot.not
 
 
@@ -41,8 +43,9 @@ internal class TaskDetailFragmentTest {
         ServiceLocator.resetRepository()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun activeTaskDetails_DisplayedInUI() = runBlockingTest {
+    fun activeTaskDetails_DisplayedInUI() = runTest {
         // GIVEN - Add active (incomplete task to the DB)
         val activeTask = Task("Active Task", "AndroidX Rocks", false)
 
@@ -63,8 +66,9 @@ internal class TaskDetailFragmentTest {
         onView(withId(R.id.task_detail_complete_checkbox)).check(matches(not(isChecked())))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun completedTaskDetails_DisplayedInUi() = runBlockingTest{
+    fun completedTaskDetails_DisplayedInUi() = runTest {
         // GIVEN - Add completed task to the DB
         val activeTask = Task("Completed Task", "AndroidX Rocks", true)
 
