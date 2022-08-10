@@ -19,7 +19,7 @@ apply plugin: 'kotlin-android'
 
 // Does not have to be at the bottom anymore
 apply plugin: 'com.google.gms.google-services'
-
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
     compileSdkVersion 32
@@ -30,6 +30,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -56,6 +57,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
     implementation "androidx.navigation:navigation-ui-ktx:2.5.1"
     implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     testImplementation 'junit:junit:4.13.2'
