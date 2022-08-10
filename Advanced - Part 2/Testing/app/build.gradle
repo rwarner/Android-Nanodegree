@@ -85,6 +85,8 @@ dependencies {
     androidTestImplementation "androidx.test:rules:1.4.0"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
 
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.4.0"
+
 
     // Testing code should not be included in the main code.
     // Once https://issuetracker.google.com/128612536 is fixed this can be fixed.
