@@ -17,6 +17,10 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
+// Does not have to be at the bottom anymore
+apply plugin: 'com.google.gms.google-services'
+
+
 android {
     compileSdkVersion 32
     defaultConfig {
@@ -45,6 +49,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.fragment:fragment-ktx:1.6.0-alpha01'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.0-alpha01"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0-alpha01'
@@ -55,5 +60,3 @@ dependencies {
 
     testImplementation 'junit:junit:4.13.2'
 }
-
-apply plugin: 'com.google.gms.google-services'
