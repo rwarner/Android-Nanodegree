@@ -101,5 +101,8 @@ dependencies {
 
     androidTestImplementation "androidx.test.espresso:espresso-contrib:$espressoVersion"
 
+    androidTestImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
+
 
 }
