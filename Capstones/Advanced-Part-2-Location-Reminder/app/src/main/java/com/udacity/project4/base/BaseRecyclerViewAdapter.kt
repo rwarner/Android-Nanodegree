@@ -1,5 +1,6 @@
 package com.udacity.project4.base
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -47,6 +48,7 @@ abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Un
      *
      * @param items to be merged
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun addData(items: List<T>) {
         _items.addAll(items)
         notifyDataSetChanged()
@@ -55,6 +57,7 @@ abstract class BaseRecyclerViewAdapter<T>(private val callback: ((item: T) -> Un
     /**
      * Clears the _items data
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun clear() {
         _items.clear()
         notifyDataSetChanged()
