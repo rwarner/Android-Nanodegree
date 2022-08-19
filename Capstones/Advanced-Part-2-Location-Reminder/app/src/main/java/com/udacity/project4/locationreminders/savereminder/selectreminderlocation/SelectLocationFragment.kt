@@ -118,7 +118,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         findNavController().popBackStack()
     }
 
-    @SuppressLint("MissingPermission", "InlinedApi")
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
 
         map = googleMap
@@ -126,31 +126,33 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
         val perms = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
         if (EasyPermissions.hasPermissions(context, *perms)) {
             map.isMyLocationEnabled = true
+
+
+            val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+            val criteria = Criteria()
+
+            val location: Location? = locationManager!!.getLastKnownLocation(
+                locationManager.getBestProvider(
+                    criteria,
+                    false
+                )!!
+            )
+            if (location != null) {
+                map.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            location.getLatitude(),
+                            location.getLongitude()
+                        ), 13f
+                    )
+                )
+            }
+
+            setPoiClick(map)
         } else {
             startActivity(Intent(context, RemindersActivity::class.java))
         }
 
-        val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        val criteria = Criteria()
-
-        val location: Location? = locationManager!!.getLastKnownLocation(
-            locationManager.getBestProvider(
-                criteria,
-                false
-            )!!
-        )
-        if (location != null) {
-            map.animateCamera(
-                CameraUpdateFactory.newLatLngZoom(
-                    LatLng(
-                        location.getLatitude(),
-                        location.getLongitude()
-                    ), 13f
-                )
-            )
-        }
-
-        setPoiClick(map)
     }
 
     private fun setPoiClick(map: GoogleMap) {

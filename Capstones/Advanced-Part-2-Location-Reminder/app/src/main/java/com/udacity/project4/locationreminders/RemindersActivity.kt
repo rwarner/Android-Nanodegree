@@ -29,9 +29,6 @@ class RemindersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_reminders)
         refreshLayout.isEnabled = false
-
-        requestLocationPermission()
-        requestBackgroundPermission()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -75,7 +72,7 @@ class RemindersActivity : AppCompatActivity() {
         } else {
             EasyPermissions.requestPermissions(
                 this,
-                "Please grant the BACKGROUND location permission, always allow",
+                "Please grant the BACKGROUND location permission, must be allowed always",
                 PERMISSIONS_REQUEST_BACKGROUND_LOCATION,
                 *perms
             )

@@ -15,6 +15,7 @@ import com.udacity.project4.authentication.AuthenticationActivity
 import com.udacity.project4.base.BaseFragment
 import com.udacity.project4.base.NavigationCommand
 import com.udacity.project4.databinding.FragmentRemindersBinding
+import com.udacity.project4.locationreminders.RemindersActivity
 import com.udacity.project4.utils.setDisplayHomeAsUpEnabled
 import com.udacity.project4.utils.setTitle
 import com.udacity.project4.utils.setup
@@ -45,7 +46,12 @@ class ReminderListFragment : BaseFragment() {
         if(FirebaseAuth.getInstance().currentUser == null) {
             Log.e(TAG, "Not logged in, sending to Auth")
             startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
+        } else {
+            (activity as RemindersActivity).requestLocationPermission()
+            (activity as RemindersActivity).requestBackgroundPermission()
         }
+
+
 
         binding.refreshLayout.setOnRefreshListener { _viewModel.loadReminders() }
 
