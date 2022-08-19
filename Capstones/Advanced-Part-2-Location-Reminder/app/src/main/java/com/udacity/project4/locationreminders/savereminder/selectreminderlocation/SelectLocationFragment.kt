@@ -10,6 +10,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
@@ -150,6 +151,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
             setPoiClick(map)
         } else {
+            Toast.makeText(context, "Location permissions not granted, please check your permissions in settings before using Location", Toast.LENGTH_SHORT).show()
             startActivity(Intent(context, RemindersActivity::class.java))
         }
 
