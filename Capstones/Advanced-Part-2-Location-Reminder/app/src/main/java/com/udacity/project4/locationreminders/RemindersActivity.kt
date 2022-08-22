@@ -56,7 +56,7 @@ class RemindersActivity : AppCompatActivity() {
         } else {
             EasyPermissions.requestPermissions(
                 this,
-                "Please grant the FINE location permission",
+                "Please grant the FINE location permission to access the Map and display your location",
                 PERMISSIONS_REQUEST_LOCATION,
                 *perms
             )
@@ -72,7 +72,7 @@ class RemindersActivity : AppCompatActivity() {
         } else {
             EasyPermissions.requestPermissions(
                 this,
-                "Please grant the BACKGROUND location permission, must be allowed always",
+                "Please grant the (Allow all the time) BACKGROUND location permission, for geofencing features",
                 PERMISSIONS_REQUEST_BACKGROUND_LOCATION,
                 *perms
             )

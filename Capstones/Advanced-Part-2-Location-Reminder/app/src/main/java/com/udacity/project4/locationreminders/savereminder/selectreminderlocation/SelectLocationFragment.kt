@@ -124,7 +124,7 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
 
         map = googleMap
 
-        val perms = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+        val perms = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
         if (EasyPermissions.hasPermissions(context, *perms)) {
             map.isMyLocationEnabled = true
 
@@ -160,15 +160,21 @@ class SelectLocationFragment : BaseFragment(), OnMapReadyCallback {
     private fun setPoiClick(map: GoogleMap) {
         map.setOnPoiClickListener { poi ->
 
-            map.clear()
 
-            lastSelected = poi
-            map.addMarker(
-                MarkerOptions()
-                    .position(poi.latLng)
-                    .title(poi.name)
-            )
-            saveButton.visibility = View.VISIBLE
+            val perms = arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+            if (EasyPermissions.hasPermissions(context, *perms)) {
+                map.clear()
+
+                lastSelected = poi
+                map.addMarker(
+                    MarkerOptions()
+                        .position(poi.latLng)
+                        .title(poi.name)
+                )
+                saveButton.visibility = View.VISIBLE
+            } else {
+                (activity as RemindersActivity).requestBackgroundPermission()
+            }
 
         }
 

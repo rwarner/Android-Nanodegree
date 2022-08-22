@@ -47,8 +47,8 @@ class ReminderListFragment : BaseFragment() {
             Log.e(TAG, "Not logged in, sending to Auth")
             startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
         } else {
-            (activity as RemindersActivity).requestLocationPermission()
-            (activity as RemindersActivity).requestBackgroundPermission()
+//            (activity as RemindersActivity).requestLocationPermission()
+//            (activity as RemindersActivity).requestBackgroundPermission()
         }
 
 
