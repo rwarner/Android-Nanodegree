@@ -75,7 +75,7 @@ class SaveReminderFragment : BaseFragment() {
                 _viewModel.navigationCommand.value =
                     NavigationCommand.To(SaveReminderFragmentDirections.actionSaveReminderFragmentToSelectLocationFragment())
             }
-            //            Navigate to another fragment to get the user location
+            // Navigate to another fragment to get the user location
         }
         geofencingClient = LocationServices.getGeofencingClient(requireContext())
 
@@ -109,7 +109,6 @@ class SaveReminderFragment : BaseFragment() {
                     _viewModel.selectedPOI.value!!.latLng.longitude,
                     100f
                 )
-                .setExpirationDuration(TimeUnit.HOURS.toMillis(1))
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER)
                 .build()
 
