@@ -92,6 +92,9 @@ class SaveReminderFragment : BaseFragment() {
             val latitude = _viewModel.latitude.value
             val longitude = _viewModel.longitude.value
 
+
+
+            // Create new Reminder Data Item
             latestReminderData = ReminderDataItem(
                                             title,
                                             description,
@@ -101,7 +104,7 @@ class SaveReminderFragment : BaseFragment() {
                                         )
 
             val geofence = Geofence.Builder()
-                .setRequestId(_viewModel.selectedPOI.value!!.placeId)
+                .setRequestId(latestReminderData.id)
                 .setCircularRegion(_viewModel.selectedPOI.value!!.latLng.latitude,
                     _viewModel.selectedPOI.value!!.latLng.longitude,
                     100f
@@ -126,7 +129,7 @@ class SaveReminderFragment : BaseFragment() {
                 }
             }
 
-            _viewModel.validateAndSaveReminder(ReminderDataItem(title, description, location, latitude, longitude))
+            _viewModel.validateAndSaveReminder(latestReminderData)
         }
     }
 
