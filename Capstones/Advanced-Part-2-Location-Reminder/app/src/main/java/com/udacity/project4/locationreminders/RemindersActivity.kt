@@ -21,7 +21,6 @@ class RemindersActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "ReminderActivity"
-        private const val PERMISSIONS_REQUEST_LOCATION = 1
         private const val PERMISSIONS_REQUEST_BACKGROUND_LOCATION = 2
     }
 
@@ -48,21 +47,6 @@ class RemindersActivity : AppCompatActivity() {
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 
-    @AfterPermissionGranted(PERMISSIONS_REQUEST_LOCATION)
-    fun requestLocationPermission() {
-        val perms = arrayOf(ACCESS_FINE_LOCATION)
-        if (EasyPermissions.hasPermissions(this, *perms)) {
-            Log.d(TAG, "Fine Location permission granted")
-        } else {
-            EasyPermissions.requestPermissions(
-                this,
-                "Please grant the FINE location permission to access the Map and display your location",
-                PERMISSIONS_REQUEST_LOCATION,
-                *perms
-            )
-        }
-    }
-
     @SuppressLint("InlinedApi")
     @AfterPermissionGranted(PERMISSIONS_REQUEST_BACKGROUND_LOCATION)
     fun requestBackgroundPermission() {
@@ -78,99 +62,5 @@ class RemindersActivity : AppCompatActivity() {
             )
         }
     }
-
-    /*
-    private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-            ),
-            PERMISSIONS_REQUEST_LOCATION
-        )
-    }
-
-    private fun requestBackgroundLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ),
-                PERMISSIONS_REQUEST_BACKGROUND_LOCATION
-            )
-        } else {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                PERMISSIONS_REQUEST_LOCATION
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSIONS_REQUEST_LOCATION -> {
-                // If request is cancelled, the result arrays are empty
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // Permission granted
-                    if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        // Check background location permission next
-                        checkBackgroundLocation()
-                    }
-                } else {
-
-                    // Permission denied
-                    Toast.makeText(this, "Location permission denied, disabling function", Toast.LENGTH_LONG).show()
-
-                    // Check if we are in a state where the user has denied the permission and
-                    // selected Don't ask again
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                            this,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        )
-                    ) {
-                        Log.e(TAG, "Permission denied")
-                        // Disable add reminder button
-                        findViewById<Button>(R.id.addReminderFAB).visibility = View.GONE
-                    }
-                }
-                return
-            }
-            PERMISSIONS_REQUEST_BACKGROUND_LOCATION -> {
-                // If request is cancelled, the result arrays are empty
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-                    // Permission granted
-                    if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        Log.d(TAG, "Permissions granted")
-                    }
-                } else {
-
-                    Log.e(TAG, "Permission denied")
-
-                    // Disable add reminder button
-                    findViewById<Button>(R.id.addReminderFAB).visibility = View.GONE
-                }
-                return
-
-            }
-        }
-    }*/
-
 
 }
