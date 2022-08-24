@@ -1,16 +1,24 @@
 package com.udacity.project4
 
 import android.app.Application
+import android.view.View
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.closeSoftKeyboard
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.matcher.ViewMatchers.*
+import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
+import androidx.test.rule.GrantPermissionRule
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.PointOfInterest
 import com.udacity.project4.locationreminders.RemindersActivity
 import com.udacity.project4.locationreminders.data.ReminderDataSource
 import com.udacity.project4.locationreminders.data.dto.ReminderDTO
@@ -20,10 +28,12 @@ import com.udacity.project4.locationreminders.reminderslist.RemindersListViewMod
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
 import com.udacity.project4.util.DataBindingIdlingResource
 import com.udacity.project4.util.monitorActivity
+import com.udacity.project4.utils.EspressoIdlingResource
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -43,22 +53,16 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
     private lateinit var viewModel: SaveReminderViewModel
     private lateinit var appContext: Application
 
+    @get:Rule
+    var activityScenarioRule = ActivityScenarioRule(RemindersActivity::class.java)
 
     // An idling resource that waits for Data Binding to have no pending bindings.
     private val dataBindingIdlingResource = DataBindingIdlingResource()
 
-    /**
-     * Idling resources tell Espresso that the app is idle or busy. This is needed when operations
-     * are not scheduled in the main Looper (for example when executed on a different thread).
-     */
     @Before
     fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
         IdlingRegistry.getInstance().register(dataBindingIdlingResource)
-    }
-
-    @After
-    fun autoCloseKoinTest() {
-        stopKoin()
     }
 
     /**
@@ -66,7 +70,13 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
      */
     @After
     fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.countingIdlingResource)
         IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
+    }
+
+    @After
+    fun autoCloseKoinTest() {
+        stopKoin()
     }
 
     /**
@@ -78,7 +88,7 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
         stopKoin()//stop the original app koin
         appContext = getApplicationContext()
         val myModule = module {
-            this.viewModel {
+            viewModel {
                 RemindersListViewModel(
                     appContext,
                     get() as ReminderDataSource
@@ -98,6 +108,7 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
             modules(listOf(myModule))
         }
         //Get our real repository
+        viewModel = get()
         repository = get() as ReminderDataSource
 
         //clear the data to start fresh
@@ -118,14 +129,77 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
         dataBindingIdlingResource.monitorActivity(activityScenario) // LOOK HERE
 
         // Click on the task on the list and verify that all the data is correct.
-        Espresso.onView(withId(R.id.title))
-            .check(ViewAssertions.matches(withText("TITLE1")))
-        Espresso.onView(withId(R.id.description))
-            .check(ViewAssertions.matches(withText("DESCRIPTION")))
-        Espresso.onView(withId(R.id.location))
-            .check(ViewAssertions.matches(CoreMatchers.not(ViewMatchers.isChecked())))
+        onView(withId(R.id.title))
+            .check(matches(withText("TITLE1")))
+        onView(withId(R.id.description))
+            .check(matches(withText("DESCRIPTION")))
+        onView(withId(R.id.location))
+            .check(matches(CoreMatchers.not(isChecked())))
 
         // Make sure the activity is closed before resetting the db.
+        activityScenario.close()
+    }
+
+    @Test
+    fun addReminder_verifyError_EmptyTitle() {
+        val activityScenario = ActivityScenario.launch(RemindersActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        // Verify no data is shown
+        onView(withId(R.id.noDataTextView)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        // Click add new task
+        onView(withId(R.id.addReminderFAB)).perform(ViewActions.click())
+
+        // Set location manually
+        this.viewModel.selectedPOI.postValue(PointOfInterest(LatLng(2.0, 5.0), "", "TITLE"))
+
+        // Type in description
+        onView(withId(R.id.reminderDescription)).perform(ViewActions.typeText("DESCRIPTION"))
+
+        // Close keyboard
+        closeSoftKeyboard()
+
+        // Save reminder
+        onView(withId(R.id.saveReminder)).perform(ViewActions.click())
+
+        // Verify error message is shown
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(withText("Enter a title and description")))
+
+        // Close activity
+        activityScenario.close()
+    }
+
+
+    @Test
+    fun addReminder_verifyError_emptyDescription() {
+        val activityScenario = ActivityScenario.launch(RemindersActivity::class.java)
+        dataBindingIdlingResource.monitorActivity(activityScenario)
+
+        // Verify no data is shown
+        onView(withId(R.id.noDataTextView)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+
+        // Click add new task
+        onView(withId(R.id.addReminderFAB)).perform(ViewActions.click())
+
+        // Set location manually
+        this.viewModel.selectedPOI.postValue(PointOfInterest(LatLng(2.0, 5.0), "", "TITLE"))
+
+        // Type in description
+        onView(withId(R.id.reminderTitle)).perform(ViewActions.typeText("TITLE"))
+
+        // Close keyboard
+        closeSoftKeyboard()
+
+        // Save reminder
+        onView(withId(R.id.saveReminder)).perform(ViewActions.click())
+
+        // Verify error message is shown
+        onView(withId(com.google.android.material.R.id.snackbar_text))
+            .check(matches(withText("Enter a title and description")))
+
+        // Close activity
         activityScenario.close()
     }
 

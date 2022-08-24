@@ -45,7 +45,7 @@ ext {
     archLifecycleVersion = '2.5.1'
     cardVersion = '1.0.0'
     materialVersion = '1.6.1'
-    fragmentVersion = '1.6.0-alpha01'
+    fragmentVersion = '1.2.5'
     recyclerViewVersion = '1.2.1'
     mockitoVersion = '4.6.1'
     constraintVersion = '2.2.0-alpha03'

@@ -46,12 +46,7 @@ class ReminderListFragment : BaseFragment() {
         if(FirebaseAuth.getInstance().currentUser == null) {
             Log.e(TAG, "Not logged in, sending to Auth")
             startActivity(Intent(requireContext(), AuthenticationActivity::class.java))
-        } else {
-//            (activity as RemindersActivity).requestLocationPermission()
-//            (activity as RemindersActivity).requestBackgroundPermission()
         }
-
-
 
         binding.refreshLayout.setOnRefreshListener { _viewModel.loadReminders() }
 
