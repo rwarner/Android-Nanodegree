@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.pauseDispatcher
 import kotlinx.coroutines.test.resumeDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -105,6 +106,23 @@ class RemindersListViewModelTest {
         }
 
         // Make sure the show no data is true
+        assertThat(viewModel.showNoData.value, `is`(true))
+    }
+
+    @Test
+    fun loadReminders_Error() = runBlocking {
+        // GIVEN: the dataSource return errors.
+        fakeDataSource.setReturnError(true)
+
+        // WHEN load reminders
+        viewModel.loadReminders()
+
+        // THEN
+
+        // show error message in SnackBar view
+        assertThat(viewModel.showSnackBar.value, `is`("Error exception for data"))
+
+        // showNoData is true
         assertThat(viewModel.showNoData.value, `is`(true))
     }
 }

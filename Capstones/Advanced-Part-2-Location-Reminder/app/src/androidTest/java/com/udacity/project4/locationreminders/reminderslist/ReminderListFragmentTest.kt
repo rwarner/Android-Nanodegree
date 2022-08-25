@@ -22,6 +22,7 @@ import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
 import com.udacity.project4.util.DataBindingIdlingResource
 import com.udacity.project4.util.monitorActivity
 import com.udacity.project4.util.monitorFragment
+import com.udacity.project4.R
 import com.udacity.project4.utils.EspressoIdlingResource
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -114,56 +115,4 @@ class ReminderListFragmentTest {
             repository.deleteAllReminders()
         }
     }
-
-//    @Test
-//    fun clickAddReminderFAB_verifyNavigateToSaveReminderFragment() {
-//        // GIVEN - On the ReminderList screen
-//        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
-//        dataBindingIdlingResource.monitorFragment(scenario)
-//
-//        // Mock NavController
-//        val navController = mock(NavController::class.java)
-//        scenario.onFragment {
-//            Navigation.setViewNavController(it.view!!, navController)
-//        }
-//
-//        // WHEN - Click on the "+" button
-//        onView(withId(R.id.addReminderFAB)).perform(click())
-//
-//        // THEN - Verify that it call navigate to SaveReminder screen
-//        verify(navController).navigate(
-//            ReminderListFragmentDirections.toSaveReminder()
-//        )
-//    }
-//
-//    @Test
-//    fun noReminders_verifyShowNoData() {
-//        // GIVEN - Reminder Items is empty
-//
-//        // WHEN - On the ReminderList screen
-//        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
-//        dataBindingIdlingResource.monitorFragment(scenario)
-//
-//        // THEN - Verify that no data is shown
-//        onView(withId(R.id.noDataTextView)).check(matches(isDisplayed()))
-//    }
-//
-//    @Test
-//    fun reminders_verifyShowListOfReminders() {
-//        // GIVEN - Insert a reminder.
-//        val reminder = ReminderDTO("TITLE1", "DESCRIPTION", "Location", 1.0, 1.0)
-//        runBlocking {
-//            repository.saveReminder(reminder)
-//        }
-//
-//        // WHEN - On the ReminderList screen
-//        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
-//        dataBindingIdlingResource.monitorActivity(scenario)
-//
-//        // THEN - Verify that reminder is shown
-//        onView(withId(R.id.noDataTextView)).check(matches(not(isDisplayed())))
-//        onView(withText(reminder.title)).check(matches(isDisplayed()))
-//        onView(withText(reminder.description)).check(matches(isDisplayed()))
-//        onView(withText(reminder.location)).check(matches(isDisplayed()))
-//    }
 }
