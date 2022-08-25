@@ -20,9 +20,9 @@ import com.udacity.project4.locationreminders.data.local.LocalDB
 import com.udacity.project4.locationreminders.data.local.RemindersDatabase
 import com.udacity.project4.locationreminders.data.local.RemindersLocalRepository
 import com.udacity.project4.locationreminders.savereminder.SaveReminderViewModel
+import com.udacity.project4.util.DataBindingIdlingResource
 import com.udacity.project4.util.monitorActivity
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
@@ -30,7 +30,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -47,8 +46,7 @@ import org.koin.test.inject
 @MediumTest
 class ReminderListFragmentTest : KoinTest {
 
-    private val database: RemindersDatabase by inject()
-    private val repository: ReminderDataSource by inject()
+    private lateinit var repository: ReminderDataSource
 
     private lateinit var viewModel: SaveReminderViewModel
 
@@ -61,12 +59,14 @@ class ReminderListFragmentTest : KoinTest {
     @get: Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    // An idling resource that waits for Data Binding to have no pending bindings.
+    private val dataBindingIdlingResource = DataBindingIdlingResource()
+
     @Before
     fun setup() {
         stopKoin()
 
         appContext = getApplicationContext()
-
         val myModule = module {
             viewModel {
                 RemindersListViewModel(
@@ -80,24 +80,28 @@ class ReminderListFragmentTest : KoinTest {
                     get() as ReminderDataSource
                 )
             }
+
+            // ******* The cast says it's unneeded, but it actually is needed *******
             single { RemindersLocalRepository(get()) as ReminderDataSource }
             single { LocalDB.createRemindersDao(getApplicationContext()) }
+            single { ReminderListFragment }
+
         }
 
         startKoin {
             modules(listOf(myModule))
-            checkModules()
         }
 
 
         //Get our real repository
         viewModel = get()
+        repository = get() as ReminderDataSource
 
     }
 
     @After
-    fun clearUp() {
-        database.close()
+    fun cleanUp() {
+//        database.close()
     }
 
 
@@ -127,4 +131,28 @@ class ReminderListFragmentTest : KoinTest {
 
     }
 
+    @Test
+    fun showSnackBar() {
+
+        // WHEN - ReminderListFragment launched to display Reminder with empty reminder
+        val message = "Test Snack"
+        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
+        scenario.onFragment { it.testSnackBar(message) }
+
+        // Going too fast to detect snackbar
+        Thread.sleep(500)
+
+        // THEN
+        // Check Toast is correct
+        onView(
+            withId(
+                com.google.android.material.R.id.snackbar_text
+            )
+        ).check(
+            matches(
+                withText("Test Snack")
+            )
+        )
+
+    }
 }

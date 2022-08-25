@@ -118,4 +118,9 @@ class ReminderListFragment : BaseFragment() {
         _viewModel.setShowToast(message)
     }
 
+    @VisibleForTesting
+    fun testSnackBar(message: String) {
+        _viewModel.setSnackBar(message)
+    }
+
 }

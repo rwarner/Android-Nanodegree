@@ -64,4 +64,9 @@ class RemindersListViewModel(
         showToast.value = message
     }
 
+    @VisibleForTesting
+    fun setSnackBar(message: String) {
+        showSnackBar.value = message
+    }
+
 }
