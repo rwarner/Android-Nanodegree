@@ -74,11 +74,6 @@ class RemindersActivityTest: KoinTest {// Extended Koin Test - embed autoclose @
         IdlingRegistry.getInstance().unregister(dataBindingIdlingResource)
     }
 
-    @After
-    fun autoCloseKoinTest() {
-        stopKoin()
-    }
-
     /**
      * As we use Koin as a Service Locator Library to develop our code, we'll also use Koin to test our code.
      * at this step we will initialize Koin related code to be able to use it in out testing.
