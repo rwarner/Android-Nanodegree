@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.databinding.DataBindingUtil
@@ -110,6 +111,11 @@ class ReminderListFragment : BaseFragment() {
 
         // Setup the recycler view using the extension function
         binding.remindersRecyclerView.setup(adapter)
+    }
+
+    @VisibleForTesting
+    fun testShowToast(message: String) {
+        _viewModel.setShowToast(message)
     }
 
 }
