@@ -35,7 +35,7 @@ class ReminderDescriptionActivity : AppCompatActivity() {
             R.layout.activity_reminder_description
         )
 
-        val reminderDataItem = savedInstanceState?.get(EXTRA_ReminderDataItem) as ReminderDataItem
+        val reminderDataItem = intent.extras?.getSerializable(EXTRA_ReminderDataItem) as ReminderDataItem
 
         this.reminderDesc_Title.text = reminderDataItem.title
         this.reminderDesc_reminderDesc.text = reminderDataItem.description
