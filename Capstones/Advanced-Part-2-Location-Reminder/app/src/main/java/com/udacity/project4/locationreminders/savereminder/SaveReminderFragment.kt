@@ -2,6 +2,7 @@ package com.udacity.project4.locationreminders.savereminder
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -15,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -50,6 +52,7 @@ class SaveReminderFragment : BaseFragment() {
     private lateinit var geofencingClient: GeofencingClient
 
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
+    private lateinit var resolutionForResult: ActivityResultLauncher<IntentSenderRequest>
 
 
     private val geofencePendingIntent: PendingIntent by lazy {
@@ -91,6 +94,14 @@ class SaveReminderFragment : BaseFragment() {
             if (isGranted) {
                 onPermissionsGranted()
             }
+            else {
+                onPermissionsDenied()
+            }
+        }
+
+        resolutionForResult = registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK)
+                checkDeviceLocationSettingsAndSave()
             else {
                 onPermissionsDenied()
             }
@@ -146,6 +157,14 @@ class SaveReminderFragment : BaseFragment() {
         val locationSettingsResponseTask = settingsClient.checkLocationSettings(builder.build())
 
         locationSettingsResponseTask.addOnFailureListener { exception ->
+
+            if (exception is ResolvableApiException){
+                // Location settings are not satisfied, but this can be fixed
+                // by showing the user a dialog.
+                val intentSenderRequest = IntentSenderRequest.Builder(exception.resolution).build()
+                resolutionForResult.launch(intentSenderRequest)
+            }
+
             Snackbar.make(
                 this.requireView(),
                 R.string.location_required_error, Snackbar.LENGTH_INDEFINITE
