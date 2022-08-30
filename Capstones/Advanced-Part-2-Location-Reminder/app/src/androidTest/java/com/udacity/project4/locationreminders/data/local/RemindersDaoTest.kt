@@ -116,6 +116,6 @@ class RemindersDaoTest {
 
         // THEN - Check that it is empty
         val loaded = database.reminderDao().getReminders()
-        assertThat(loaded?.isEmpty(), `is`(0))
+        assertThat(loaded?.isEmpty(), `is`(true))
     }
 }

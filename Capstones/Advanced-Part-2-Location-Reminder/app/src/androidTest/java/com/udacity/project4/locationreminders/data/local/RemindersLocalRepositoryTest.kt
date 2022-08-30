@@ -13,12 +13,15 @@ import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.core.IsNull.isNotNull
 import org.hamcrest.core.IsNull.nullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.isNotNull
+import org.mockito.ArgumentMatchers.isNull
 
 
 @ExperimentalCoroutinesApi
@@ -114,5 +117,16 @@ class RemindersLocalRepositoryTest {
         // Verify all items deleted
         val result2 = localRepository.getReminders() as Result.Success
         assertThat(result2.data.size, `is`(0))
+    }
+
+    @Test
+    fun getReminder_noDataFoundVerify() = runBlocking {
+        // GIVEN - Add one reminder
+        val reminder1 = ReminderDTO("TITLE1", "DESCRIPTION", "Location", 1.0, 1.0)
+        localRepository.saveReminder(reminder1)
+
+        // THEN - Get a reminder that doesn't exist and verify not found
+        val noResult = localRepository.getReminder("1")
+        assertThat((noResult as Result.Error).message, `is`("Reminder not found!"))
     }
 }
