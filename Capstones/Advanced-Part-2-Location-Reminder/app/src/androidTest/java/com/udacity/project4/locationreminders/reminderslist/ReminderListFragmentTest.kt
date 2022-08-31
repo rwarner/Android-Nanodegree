@@ -117,47 +117,42 @@ class ReminderListFragmentTest : KoinTest {
 
 
     /**
-     * This test fails to successfully run unless targeting API 29 or lower as described in the following:
+     * This test fails to successfully run unless running on API 29 or lower as described in the following:
      *
      * https://github.com/android/android-test/issues/803
      * https://knowledge.udacity.com/questions/847814
      * https://knowledge.udacity.com/questions/812550
      *
-     * I cannot target 29 because some of my dependencies will fail due to requirements
      */
-//    @Test
-//    fun showToast() {
-//
-//        // WHEN - ReminderListFragment launched to display Reminder with empty reminder
-//        val message = "Test Toast"
-//        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
-//        scenario.onFragment { it.testShowToast(message) }
-//
-//        // Going too fast to detect toast
-////        Thread.sleep(2000)
-//
-//        // THEN
-//
-//        // Check Toast is correct
-//        val device: UiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-//        assertTrue(device.hasObject(By.textContains("Toast")))
-//
-//        // Check Toast is correct
-//        onView(withText("Test Toast")).inRoot(
-//            withDecorView(
-//                not(
-//                    `is`(
-//                        activityRule.activity?.window?.decorView
-//                    )
-//                )
-//            )
-//        ).check(
-//            matches(
-//                isDisplayed()
-//            )
-//        )
-//
-//    }
+    @Test
+    fun showToast() {
+
+        // WHEN - ReminderListFragment launched to display Reminder with empty reminder
+        val message = "Test Toast"
+        val scenario = launchFragmentInContainer<ReminderListFragment>(Bundle(), R.style.AppTheme)
+        scenario.onFragment { it.testShowToast(message) }
+
+        // Going too fast to detect toast
+        Thread.sleep(2000)
+
+        // THEN
+
+        // Check Toast is correct
+        onView(withText("Test Toast")).inRoot(
+            withDecorView(
+                not(
+                    `is`(
+                        activityRule.activity?.window?.decorView
+                    )
+                )
+            )
+        ).check(
+            matches(
+                isDisplayed()
+            )
+        )
+
+    }
 
     @Test
     fun showSnackBar() {
