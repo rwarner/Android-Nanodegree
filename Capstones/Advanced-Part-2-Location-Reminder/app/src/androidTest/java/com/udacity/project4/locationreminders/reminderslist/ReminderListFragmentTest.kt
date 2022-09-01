@@ -66,13 +66,6 @@ class ReminderListFragmentTest : KoinTest {
     @Rule @JvmField
     var activityRule = ActivityTestRule(RemindersActivity::class.java)
 
-
-    @get: Rule
-    var instantExecutorRule = InstantTaskExecutorRule()
-
-    // An idling resource that waits for Data Binding to have no pending bindings.
-    private val dataBindingIdlingResource = DataBindingIdlingResource()
-
     @Before
     fun setup() {
         stopKoin()
@@ -108,11 +101,6 @@ class ReminderListFragmentTest : KoinTest {
         viewModel = get()
         repository = get() as ReminderDataSource
 
-    }
-
-    @After
-    fun cleanUp() {
-//        database.close()
     }
 
 
