@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="electionViewModel"
+            type="com.example.android.politicalpreparedness.election.ElectionsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.android.politicalpreparedness.MainActivity">
+
+        <!-- Upcoming Elections -->
+
+        <TextView
+            android:id="@+id/fragment_elections_textview_upcoming_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/fragment_elections_upcoming_elections"
+            android:theme="@style/App_Text_Header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_elections_recycler_upcoming"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="@dimen/default_padding"
+            app:listData="@{electionViewModel.upcomingElections}"
+            tools:listitem="@layout/list_item_election"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_elections_textview_upcoming_header" />
+
+        <!-- Saved Election -->
+
+        <TextView
+            android:id="@+id/fragment_elections_textview_saved_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_elections_saved_elections"
+            android:theme="@style/App_Text_Header"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="@+id/fragment_elections_textview_upcoming_header"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_elections_recycler_upcoming" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_elections_recycler_saved"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/standard_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:listData="@{electionViewModel.savedElections}"
+            tools:listitem="@layout/list_item_election"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_elections_textview_saved_header" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

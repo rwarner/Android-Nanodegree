@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:motion="http://schemas.android.com/tools">
+
+    <!-- TODO: Add data binding node -->
+
+    <!-- TODO: Add motion scene to hide form on vertical scroll. -->
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <!-- TODO: Add visual styling and content -->
+        <TextView
+            android:id="@+id/fragment_representative_textView_searchHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_representative_representative_search"
+            style="@style/App_Text_Header"
+            android:layout_margin="@dimen/standard_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- TODO: Add data binding value -->
+        <!-- TODO: Add visual styling and content -->
+        <EditText
+            android:id="@+id/fragment_representative_editText_addressLine1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="textPostalAddress"
+            android:hint="Address Line 1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_textView_searchHeader" />
+
+        <!-- TODO: Add data binding value -->
+        <!-- TODO: Add visual styling and content -->
+        <EditText
+            android:id="@+id/fragment_representative_editText_addressLine2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:autofillHints=""
+            android:inputType="textPostalAddress"
+            android:hint="Address Line 2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_addressLine1" />
+
+        <!-- TODO: Add data binding value -->
+        <!-- TODO: Add visual styling and content -->
+        <EditText
+            android:id="@+id/fragment_representative_editText_city"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="textPostalAddress"
+            android:hint="City"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_representative_editText_state"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_addressLine2" />
+
+        <!-- TODO: Add default values from provided resources  -->
+        <!-- TODO: Add data binding value -->
+        <!-- TODO: Add visual styling and content -->
+        <Spinner
+            android:id="@+id/fragment_representative_editText_state"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:autofillHints=""
+            android:inputType="textPostalAddress"
+            app:layout_constraintStart_toEndOf="@id/fragment_representative_editText_city"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/fragment_representative_editText_city"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_representative_editText_city"/>
+
+        <!-- TODO: Add data binding value -->
+        <!-- TODO: Add visual styling and content -->
+        <EditText
+            android:id="@+id/fragment_representative_editText_zip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:inputType="number"
+            android:maxLength="5"
+            android:hint="Zip"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/fragment_representative_editText_city"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_city" />
+
+        <!-- TODO: Add visual styling and label -->
+        <Button
+            android:id="@+id/fragment_representative_button_findMyRep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            style="@style/App_Button_Primary"
+            android:text="@string/fragment_representative_find_my_representatives"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_zip" />
+
+        <!-- TODO: Add visual styling and content -->
+        <Button
+            android:id="@+id/fragment_representative_button_useMyLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            style="@style/App_Button_Primary"
+            android:text="@string/fragment_representative_use_my_location"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_button_findMyRep" />
+
+        <!-- TODO: Add visual styling and content -->
+        <TextView
+            android:id="@+id/fragment_representative_textView_myRep_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            style="@style/App_Text_Header"
+            android:text="@string/fragment_representative_my_representatives"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_button_useMyLocation" />
+
+        <!-- TODO: Add Representatives RecyclerView -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_representative_recyclerView_myReps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_textView_myRep_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/standard_margin"/>
+
+        <!-- TODO: Add visual styling and content -->
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+</layout>

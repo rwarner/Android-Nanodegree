@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- TODO: Add node to connect Election ViewModel -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.android.politicalpreparedness.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/fragment_election_detail_toolbar_electionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_padding"
+            android:singleLine="true"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_election_detail_textView_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_election_detail_toolbar_electionName"
+            tools:text="Tue Apr 07 00:00:00:00 EDT 2020" />
+
+        <TextView
+            android:id="@+id/fragment_election_detail_textView_electionHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/fragment_election_info_election_info"
+            style="@style/App_Text_Sub_Header"
+            app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_date"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_date" />
+
+        <TextView
+            android:id="@+id/fragment_election_detail_textView_votingLocations_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:layout_marginStart="@dimen/default_padding"
+            android:text="@string/fragment_election_info_voting_locations"
+            app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_electionHeader"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_electionHeader" />
+
+        <TextView
+            android:id="@+id/fragment_election_detail_textView_ballotInfo_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/standard_margin"
+            android:text="@string/fragment_election_info_ballot_information"
+            app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_votingLocations_header"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_votingLocations_header" />
+
+        <Button
+            android:id="@+id/fragment_election_detail_button_followElection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/standard_margin"
+            style="@style/App_Button_Primary"
+            android:text="@string/fragment_election_info_follow_election"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
