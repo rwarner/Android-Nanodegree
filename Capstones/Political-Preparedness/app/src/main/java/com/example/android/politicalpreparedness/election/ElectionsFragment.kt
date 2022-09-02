@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide.init
 import com.example.android.politicalpreparedness.database.ElectionDatabase
@@ -19,7 +20,6 @@ import com.example.android.politicalpreparedness.election.adapter.ElectionListen
 class ElectionsFragment: Fragment() {
 
     lateinit var electionViewModel: ElectionsViewModel
-    lateinit var upcomingAdapter: ElectionListAdapter
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -39,42 +39,55 @@ class ElectionsFragment: Fragment() {
 
         binding.electionViewModel = electionViewModel
 
-        //TODO: Add ViewModel values and create ViewModel
-
-        //TODO: Add binding values
 
         //TODO: Link elections to voter info
 
+        // Set the layout manager for the recycler view (REQUIRED to show data)
+        binding.fragmentElectionsRecyclerSaved.layoutManager = LinearLayoutManager(context);
+        binding.fragmentElectionsRecyclerUpcoming.layoutManager = LinearLayoutManager(context);
+
+        // Initialize the adapters
         val savedAdapter = ElectionListAdapter(ElectionListener { election ->
             electionViewModel.onSavedElectionClicked(election)
         })
+        val upcomingAdapter = ElectionListAdapter(ElectionListener { election ->
+            electionViewModel.onUpcomingElectionClicked(election)
+        })
+
+        // Setup observers for the data that changes in the view model
         electionViewModel.savedElections.observe(viewLifecycleOwner) {
             savedAdapter.submitList(it)
         }
-        binding.fragmentElectionsRecyclerSaved.adapter = savedAdapter
-
-        upcomingAdapter = ElectionListAdapter(ElectionListener { election ->
-            electionViewModel.onUpcomingElectionClicked(election)
-        })
         electionViewModel.upcomingElections.observe(viewLifecycleOwner) {
-            for(item in it) {
-                Log.d("TAG", item.name)
-            }
             upcomingAdapter.submitList(it)
         }
+
+        // Setup the adapters for reach recycler view
+        binding.fragmentElectionsRecyclerSaved.adapter = savedAdapter
         binding.fragmentElectionsRecyclerUpcoming.adapter = upcomingAdapter
 
 
-        //TODO: Populate recycler adapters
+        // Setup each item that is clicked to navigate to the VoterInfo Fragment
+        electionViewModel.navigateToUpcomingElections.observe(viewLifecycleOwner) { election ->
+            election?.let {
+                this.findNavController().navigate(
+                    ElectionsFragmentDirections.actionElectionsFragmentToVoterInfoFragment(
+                        election.id,
+                        election.division
+                    )
+                )
+                electionViewModel.onUpcomingElectionNavigated()
+            }
+        }
 
         return binding.root
     }
 
 
-    //TODO: Refresh adapters when fragment loads
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Fetch the upcoming elections from the API when the view is created
         electionViewModel.fetchUpcomingElections()
     }
 

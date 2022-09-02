@@ -56,6 +56,9 @@ class ElectionsViewModel(
     fun onUpcomingElectionClicked(election: Election) {
         _navigateToUpcomingElections.value = election
     }
+    fun onUpcomingElectionNavigated() {
+        _navigateToUpcomingElections.value = null
+    }
 
     //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
 
