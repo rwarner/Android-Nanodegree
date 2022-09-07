@@ -30,5 +30,16 @@
             android:text="@{election.name}"
             tools:text="Election Sample Name"/>
 
+        <TextView
+            android:id="@+id/election_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="5dp"
+            android:text="@{election.electionDay.toLocaleString()}"
+            app:layout_constraintStart_toStartOf="@+id/election_name"
+            app:layout_constraintTop_toBottomOf="@+id/election_name"
+            tools:text="Feb 9, 2000" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

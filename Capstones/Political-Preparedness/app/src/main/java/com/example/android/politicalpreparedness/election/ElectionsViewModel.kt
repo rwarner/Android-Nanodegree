@@ -2,12 +2,16 @@ package com.example.android.politicalpreparedness.election
 
 import android.app.Application
 import android.util.Log
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
 import com.example.android.politicalpreparedness.database.ElectionDao
+import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.CivicsApiService
 import com.example.android.politicalpreparedness.network.CivicsHttpClient
 import com.example.android.politicalpreparedness.network.models.Election
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 //TODO: Construct ViewModel and provide election datasource
@@ -16,6 +20,8 @@ class ElectionsViewModel(
     application: Application
 ) : AndroidViewModel(application) {
 
+
+    private val TAG = "Elections View Model"
 
     private var _upcomingElections = MutableLiveData<List<Election>>()
     val upcomingElections: LiveData<List<Election>>
@@ -38,6 +44,9 @@ class ElectionsViewModel(
         get() = _navigateToSavedElections
     fun onSavedElectionClicked(election: Election) {
         _navigateToSavedElections.value = election
+    }
+    fun onSavedElectionNavigated() {
+        _navigateToSavedElections.value = null
     }
 
 
@@ -65,11 +74,37 @@ class ElectionsViewModel(
     fun fetchUpcomingElections() {
         viewModelScope.launch {
             try {
-                _upcomingElections.value = CivicsApi.retrofitService.getElections(CivicsHttpClient.API_KEY).elections
-                Log.d("Elections View Model", "Success: " + _upcomingElections.value!!.toList().toString())
+                var electionsReturned = CivicsApi.retrofitService.getElections(CivicsHttpClient.API_KEY).elections
+
+                // Remove the Test elections
+                for(election in electionsReturned) {
+                    if(election.name.contains("Test")) {
+                        electionsReturned
+                        electionsReturned = electionsReturned.toMutableList().apply {
+                            remove(election)
+                        }.toList()
+                    }
+                }
+
+                _upcomingElections.value = electionsReturned
+                Log.d("Elections View Model (Upcoming)", "Success: " + _upcomingElections.value!!.toList().toString())
+
             } catch (e: Exception) {
                 // Clear recycler view
-                Log.e("Elections View Model", e.stackTraceToString())
+                Log.e("Elections View Model (Upcoming)", e.stackTraceToString())
+                _upcomingElections.value = ArrayList()
+            }
+        }
+    }
+
+    fun fetchSavedElections() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                _savedElections.postValue(database.getAllElections())
+
+            } catch (e: Exception) {
+                // Clear recycler view
+                Log.e("Elections View Model (Saved)", e.stackTraceToString())
                 _savedElections.value = ArrayList()
             }
         }

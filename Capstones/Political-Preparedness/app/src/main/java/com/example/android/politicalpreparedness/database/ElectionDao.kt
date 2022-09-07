@@ -18,13 +18,13 @@ interface ElectionDao {
      * Selects and returns all elections
      */
     @Query("SELECT * FROM election_table")
-    fun getAllElections(): LiveData<List<Election>>
+    fun getAllElections(): List<Election>
 
     /**
      * Selects and returns the election for a given ID
      */
     @Query("SELECT * from election_table WHERE id = :key")
-    fun getElectionWithId(key: Long): LiveData<Election>
+    fun getElectionWithId(key: Long): Election?
 
     /**
      * Delete a given election

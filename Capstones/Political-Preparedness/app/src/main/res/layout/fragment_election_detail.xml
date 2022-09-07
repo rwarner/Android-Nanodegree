@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add node to connect Election ViewModel -->
+    <data>
+        <variable
+            name="electionDetailViewModel"
+            type="com.example.android.politicalpreparedness.election.ElectionDetailViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,24 +41,28 @@
             app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_date"
             app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_date" />
 
+        <!-- TODO: Add click binding to open web URL (state locations) -->
         <TextView
-            android:id="@+id/fragment_election_detail_textView_votingLocations_header"
+            android:id="@+id/fragment_election_detail_textView_votingLocations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/standard_margin"
             android:layout_marginStart="@dimen/default_padding"
             android:text="@string/fragment_election_info_voting_locations"
+            style="@style/App_Text_Link"
             app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_electionHeader"
             app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_electionHeader" />
 
+        <!-- TODO: Add click binding to open web URL (state locations) -->
         <TextView
-            android:id="@+id/fragment_election_detail_textView_ballotInfo_header"
+            android:id="@+id/fragment_election_detail_textView_ballotInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/standard_margin"
             android:text="@string/fragment_election_info_ballot_information"
-            app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_votingLocations_header"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_votingLocations_header" />
+            style="@style/App_Text_Link"
+            app:layout_constraintStart_toStartOf="@+id/fragment_election_detail_textView_votingLocations"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_election_detail_textView_votingLocations" />
 
         <Button
             android:id="@+id/fragment_election_detail_button_followElection"

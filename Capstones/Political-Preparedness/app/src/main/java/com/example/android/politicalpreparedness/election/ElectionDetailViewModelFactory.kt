@@ -5,14 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android.politicalpreparedness.database.ElectionDao
 
-class ElectionsViewModelFactory(
+class ElectionDetailViewModelFactory(
     private val dataSource: ElectionDao,
     private val application: Application
 ) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ElectionsViewModel::class.java)) {
-            return ElectionsViewModel(dataSource, application) as T
+        if (modelClass.isAssignableFrom(ElectionDetailViewModel::class.java)) {
+            return ElectionDetailViewModel(dataSource, application) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

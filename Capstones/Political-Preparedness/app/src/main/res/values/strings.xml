@@ -12,6 +12,7 @@
     <string name="fragment_election_info_voting_locations">Voting Locations</string>
     <string name="fragment_election_info_ballot_information">Ballot Information</string>
     <string name="fragment_election_info_follow_election">Follow Election</string>
+    <string name="fragment_election_info_unfollow_election">Unfollow Election</string>
 
     <string name="fragment_representative_representative_search">Representative Search</string>
     <string name="fragment_representative_find_my_representatives">Find my Representatives</string>
