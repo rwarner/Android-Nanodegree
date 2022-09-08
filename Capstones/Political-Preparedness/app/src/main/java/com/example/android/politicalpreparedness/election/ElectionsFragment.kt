@@ -36,8 +36,8 @@ class ElectionsFragment: Fragment() {
         binding.electionViewModel = electionViewModel
 
         // Set the layout manager for the recycler view (REQUIRED to show data)
-        binding.fragmentElectionsRecyclerSaved.layoutManager = LinearLayoutManager(context);
-        binding.fragmentElectionsRecyclerUpcoming.layoutManager = LinearLayoutManager(context);
+        binding.fragmentElectionsRecyclerSaved.layoutManager = LinearLayoutManager(context)
+        binding.fragmentElectionsRecyclerUpcoming.layoutManager = LinearLayoutManager(context)
 
         // Initialize the adapters
         val savedAdapter = ElectionListAdapter(ElectionListener { election ->
@@ -46,14 +46,6 @@ class ElectionsFragment: Fragment() {
         val upcomingAdapter = ElectionListAdapter(ElectionListener { election ->
             electionViewModel.onUpcomingElectionClicked(election)
         })
-
-        // Setup observers for the data that changes in the view model
-        electionViewModel.savedElections.observe(viewLifecycleOwner) {
-            savedAdapter.submitList(it)
-        }
-        electionViewModel.upcomingElections.observe(viewLifecycleOwner) {
-            upcomingAdapter.submitList(it)
-        }
 
         // Setup the adapters for reach recycler view
         binding.fragmentElectionsRecyclerSaved.adapter = savedAdapter

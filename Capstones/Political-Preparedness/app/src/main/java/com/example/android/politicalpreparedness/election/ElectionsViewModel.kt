@@ -1,25 +1,27 @@
 package com.example.android.politicalpreparedness.election
 
 import android.app.Application
+import android.system.Os.remove
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.*
+import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.database.ElectionDatabase
 import com.example.android.politicalpreparedness.network.CivicsApi
 import com.example.android.politicalpreparedness.network.CivicsApiService
 import com.example.android.politicalpreparedness.network.CivicsHttpClient
 import com.example.android.politicalpreparedness.network.models.Election
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 
-//TODO: Construct ViewModel and provide election datasource
 class ElectionsViewModel(
     val database: ElectionDao,
     application: Application
 ) : AndroidViewModel(application) {
-
 
     private val TAG = "Elections View Model"
 
@@ -69,8 +71,6 @@ class ElectionsViewModel(
         _navigateToUpcomingElections.value = null
     }
 
-    //TODO: Create val and functions to populate live data for upcoming elections from the API and saved elections from local database
-
     fun fetchUpcomingElections() {
         viewModelScope.launch {
             try {
@@ -89,6 +89,13 @@ class ElectionsViewModel(
                 _upcomingElections.value = electionsReturned
                 Log.d("Elections View Model (Upcoming)", "Success: " + _upcomingElections.value!!.toList().toString())
 
+            } catch (e: SocketTimeoutException) {
+                Log.e("Elections View Model (Upcoming)", e.stackTraceToString())
+                Snackbar.make(
+                    this@ElectionsViewModel.getApplication(),
+                    "Network timeout",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             } catch (e: Exception) {
                 // Clear recycler view
                 Log.e("Elections View Model (Upcoming)", e.stackTraceToString())
@@ -109,7 +116,4 @@ class ElectionsViewModel(
             }
         }
     }
-
-    //TODO: Create functions to navigate to saved or upcoming election voter info
-
 }
