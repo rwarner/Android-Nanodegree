@@ -56,7 +56,7 @@
             <EditText
                 android:id="@+id/fragment_representative_editText_addressLine2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/empty_size"
                 android:autofillHints=""
                 android:hint="Address Line 2"
                 android:inputType="textPostalAddress"
@@ -66,7 +66,7 @@
 
             <EditText
                 android:id="@+id/fragment_representative_editText_city"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/empty_size"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:hint="City"
@@ -78,8 +78,8 @@
 
             <Spinner
                 android:id="@+id/fragment_representative_editText_state"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/empty_size"
+                android:layout_height="@dimen/empty_size"
                 android:autofillHints=""
                 android:entries="@array/states"
                 android:inputType="textPostalAddress"
@@ -91,7 +91,7 @@
 
             <EditText
                 android:id="@+id/fragment_representative_editText_zip"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/empty_size"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:hint="Zip"
@@ -127,7 +127,7 @@
             style="@style/App_Text_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/xs_margin"
             android:layout_marginLeft="@dimen/standard_margin"
             android:layout_marginBottom="@dimen/standard_margin"
             android:text="@string/fragment_representative_my_representatives"

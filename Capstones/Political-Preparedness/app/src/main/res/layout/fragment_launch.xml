@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/standard_margin"
             android:layout_marginEnd="@dimen/standard_margin"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/small_margin"
             style="@style/App_Button_Primary"
             android:text="@string/fragment_launch_upcoming_elections"
             app:layout_constraintBottom_toTopOf="@+id/fragment_launch_button_findMyRepresentatives"

@@ -30,7 +30,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_elections_recycler_upcoming"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="@dimen/xxxl_margin"
             android:layout_marginTop="@dimen/default_padding"
             app:listData="@{electionViewModel.upcomingElections}"
             tools:listitem="@layout/list_item_election"
@@ -52,7 +52,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_elections_recycler_saved"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/empty_size"
             android:layout_marginTop="@dimen/default_padding"
             android:layout_marginBottom="@dimen/standard_margin"
             app:layout_constraintBottom_toBottomOf="parent"

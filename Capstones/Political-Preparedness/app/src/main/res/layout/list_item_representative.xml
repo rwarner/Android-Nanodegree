@@ -17,15 +17,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/xl_margin"
         android:orientation="vertical"
         android:onClick="@{() -> clickListener.onClick(representative)}">
 
         <ImageView
             android:id="@+id/representative_image"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="15dp"
+            android:layout_width="@dimen/profileSize"
+            android:layout_height="@dimen/profileSize"
+            android:layout_marginStart="@dimen/medium_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +36,7 @@
             android:id="@+id/representative_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/small_margin"
             android:layout_marginTop="@dimen/standard_margin"
             android:text="@{representative.office.name}"
             app:layout_constraintStart_toEndOf="@+id/representative_image"
@@ -64,10 +64,10 @@
 
         <ImageView
             android:id="@+id/representative_social_web"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="75dp"
+            android:layout_width="@dimen/social_size"
+            android:layout_height="@dimen/social_size"
+            android:layout_marginTop="@dimen/small_margin"
+            android:layout_marginStart="@dimen/large_margin"
             android:src="@drawable/ic_www"
             app:layout_constraintEnd_toStartOf="@id/representative_social_facebook"
             app:layout_constraintStart_toEndOf="@id/representative_party"
@@ -76,8 +76,8 @@
 
         <ImageView
             android:id="@+id/representative_social_facebook"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/social_size"
+            android:layout_height="@dimen/social_size"
             android:src="@drawable/ic_facebook"
             app:layout_constraintEnd_toStartOf="@id/representative_social_twitter"
             app:layout_constraintStart_toEndOf="@id/representative_social_web"
@@ -85,8 +85,8 @@
 
         <ImageView
             android:id="@+id/representative_social_twitter"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/social_size"
+            android:layout_height="@dimen/social_size"
             android:src="@drawable/ic_twitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/representative_social_facebook"
