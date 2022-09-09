@@ -8,9 +8,9 @@
         app:constraintSetStart="@+id/start"
         app:constraintSetEnd="@id/end">
         <OnSwipe
-            motion:dragDirection="dragUp"
-            motion:onTouchUp="stop"
-            motion:touchAnchorId="@id/fragment_representative_recyclerView_myReps" />
+            app:dragDirection="dragUp"
+            app:onTouchUp="stop"
+            app:touchAnchorId="@id/fragment_representative_recyclerView_myReps" />
     </Transition>
 
 

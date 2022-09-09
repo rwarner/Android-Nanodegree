@@ -120,24 +120,26 @@
                 android:text="@string/fragment_representative_use_my_location"
                 app:layout_constraintTop_toBottomOf="@id/fragment_representative_button_findMyRep" />
 
-            <TextView
-                android:id="@+id/fragment_representative_textView_myRep_header"
-                style="@style/App_Text_Header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin"
-                android:text="@string/fragment_representative_my_representatives"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_representative_button_useMyLocation" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/fragment_representative_textView_myRep_header"
+            style="@style/App_Text_Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/standard_margin"
+            android:layout_marginBottom="@dimen/standard_margin"
+            android:text="@string/fragment_representative_my_representatives"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_formLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_representative_recyclerView_myReps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="@id/fragment_representative_formLayout"
-            app:layout_constraintTop_toBottomOf="@id/fragment_representative_formLayout"
+            app:layout_constraintTop_toBottomOf="@id/fragment_representative_textView_myRep_header"
             android:gravity="center"
             android:textAlignment="center"
             app:listData="@{representativeViewModel.listOfRepresentatives}"
