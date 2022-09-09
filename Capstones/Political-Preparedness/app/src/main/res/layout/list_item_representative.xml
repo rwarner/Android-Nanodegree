@@ -23,8 +23,8 @@
 
         <ImageView
             android:id="@+id/representative_image"
-            android:layout_width="@dimen/profileSize"
-            android:layout_height="@dimen/profileSize"
+            android:layout_width="@dimen/profile_size"
+            android:layout_height="@dimen/profile_size"
             android:layout_marginStart="@dimen/medium_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
