@@ -11,8 +11,11 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -22,7 +25,9 @@ import com.example.android.politicalpreparedness.databinding.FragmentRepresentat
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
-import java.util.Locale
+import com.google.android.material.snackbar.Snackbar
+import java.util.*
+
 
 class RepresentativeFragment : Fragment() {
 
@@ -31,13 +36,14 @@ class RepresentativeFragment : Fragment() {
         private val REQUEST_LOCATION_PERMISSION = 1
     }
 
+    lateinit var binding: FragmentRepresentativeBinding
     lateinit var representativeViewModel: RepresentativeViewModel
     var address: Address = Address("", "", "", "", "")
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View?{
-        val binding = FragmentRepresentativeBinding.inflate(inflater)
+        binding = FragmentRepresentativeBinding.inflate(inflater)
         binding.lifecycleOwner = this
 
         val application = requireNotNull(this.activity).application
@@ -47,7 +53,6 @@ class RepresentativeFragment : Fragment() {
 
         // Set the data binding to the view model
         binding.representativeViewModel = representativeViewModel
-        binding.address = address
 
         // Set the layout manager for the recycler view (REQUIRED to show data)
         binding.fragmentRepresentativeRecyclerViewMyReps.layoutManager = LinearLayoutManager(context)
@@ -61,41 +66,103 @@ class RepresentativeFragment : Fragment() {
             representativeListAdapter.submitList(it)
         }
 
+        // Set the adapter for the RecyclerView "My Reps"
         binding.fragmentRepresentativeRecyclerViewMyReps.adapter = representativeListAdapter
 
+        // When clicking the Use My Location button, execute the following
         binding.fragmentRepresentativeButtonUseMyLocation.setOnClickListener {
 
             // Obtain permission
             if(checkLocationPermissions()) {
                 // Get location
                 if(getLocation()) {
-                    // Fill in fields with appropriate location information
+                    // Set the address in the view model to auto update any fields
+                    representativeViewModel.setAddress(address)
+
+                    // Fetch reps automatically
                     representativeViewModel.fetchRepresentativeList(address.toFormattedString())
-                    binding.fragmentRepresentativeEditTextAddressLine1.setText(address.line1)
-                    binding.fragmentRepresentativeEditTextAddressLine2.setText(address.line2)
-
-                    // TODO: Set state in spinner
-
-                    binding.fragmentRepresentativeEditTextCity.setText(address.city)
-                    binding.fragmentRepresentativeEditTextZip.setText(address.zip)
                     hideKeyboard()
                 }
             }
         }
 
+        // When clicking the Find My Rep button, execute the following
         binding.fragmentRepresentativeButtonFindMyRep.setOnClickListener {
 
-            val address = "1263 Pacific Ave. Kansas City, KS"
-            representativeViewModel.fetchRepresentativeList(address)
+            val address = StringBuffer()
+
+            // Two way data binding was overly complicated when this gets the job done
+            address.append(binding.fragmentRepresentativeEditTextAddressLine1.text)
+            address.append(" ")
+            address.append(binding.fragmentRepresentativeEditTextAddressLine2.text)
+            address.append(", ")
+            address.append(binding.fragmentRepresentativeEditTextCity.text)
+            address.append(", ")
+            address.append(binding.fragmentRepresentativeEditTextState.selectedItem.toString())
+            address.append(" ")
+            address.append(binding.fragmentRepresentativeEditTextZip.text)
+
+            representativeViewModel.fetchRepresentativeList(address.toString())
 
             // Grab
             hideKeyboard()
         }
 
+        // Set all address fields
+        setupFieldsForAddress()
+
         return binding.root
     }
 
+    /**
+     * When the address changes in the [RepresentativeViewModel], update the fields in the fragment view
+     */
+    private fun setupFieldsForAddress() {
+        representativeViewModel.address.observe(viewLifecycleOwner) {
 
+            binding.fragmentRepresentativeEditTextAddressLine1.setText(it.line1)
+            binding.fragmentRepresentativeEditTextAddressLine2.setText(it.line2)
+
+            // Set the spinner value
+            binding.fragmentRepresentativeEditTextState.setSelection(
+                (binding.fragmentRepresentativeEditTextState.adapter as ArrayAdapter<String?>).getPosition(
+                    it.state
+                )
+            )
+
+            binding.fragmentRepresentativeEditTextCity.setText(it.city)
+            binding.fragmentRepresentativeEditTextZip.setText(it.zip)
+
+        }
+    }
+
+
+    /**
+     * Hide keyboard when needed programmatically
+     */
+    private fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+    }
+
+
+    /**
+     * Get [Address] object for a given [Location] object
+     */
+    private fun geoCodeLocation(location: Location): Address {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        return geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            .map { address ->
+                Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
+            }
+            .first()
+    }
+
+    /****** Permission methods below ******/
+
+    /**
+     * Respond appropriately to permissions checks
+     */
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
@@ -112,7 +179,7 @@ class RepresentativeFragment : Fragment() {
     }
 
     /**
-     * Initiate checking for location permission if we do no have it
+     * Initiate checking for location permission if we do not have it
      */
     private fun checkLocationPermissions(): Boolean {
         return if (isPermissionGranted()) {
@@ -153,6 +220,9 @@ class RepresentativeFragment : Fragment() {
         return permissionGranted
     }
 
+    /**
+     * Obtain Lat/Long / Address for given Location from Location services
+     */
     @SuppressLint("MissingPermission")
     private fun getLocation(): Boolean {
 
@@ -172,7 +242,7 @@ class RepresentativeFragment : Fragment() {
                 Log.d(TAG, "Address: ${address.toFormattedString()}")
             } catch (e: Exception) {
                 // If this crashes, it most likely is due to being at a location with a facility name
-                // which kept happenning
+                // which kept happening
                 val geocoder = Geocoder(context, Locale.getDefault())
                 address = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     .map { address ->
@@ -182,26 +252,20 @@ class RepresentativeFragment : Fragment() {
 
             }
         } else {
-            Log.e(TAG, "Location is null")
+            val errorMsg = "Location is null"
+
+            Snackbar.make(
+                requireView(),
+                errorMsg,
+                Snackbar.LENGTH_SHORT
+            ).show()
+
+            Log.e(TAG, errorMsg)
             return false
         }
 
         return true
     }
 
-
-    private fun geoCodeLocation(location: Location): Address {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                .map { address ->
-                    Address(address.thoroughfare, address.subThoroughfare, address.locality, address.adminArea, address.postalCode)
-                }
-                .first()
-    }
-
-    private fun hideKeyboard() {
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
-    }
 
 }
