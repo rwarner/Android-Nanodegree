@@ -77,14 +77,14 @@ class ElectionsViewModel(
                 var electionsReturned = CivicsApi.retrofitService.getElections(CivicsHttpClient.API_KEY).elections
 
                 // Remove the Test elections
-                for(election in electionsReturned) {
-                    if(election.name.contains("Test")) {
-                        electionsReturned
-                        electionsReturned = electionsReturned.toMutableList().apply {
-                            remove(election)
-                        }.toList()
-                    }
-                }
+//                for(election in electionsReturned) {
+//                    if(election.name.contains("Test")) {
+//                        electionsReturned
+//                        electionsReturned = electionsReturned.toMutableList().apply {
+//                            remove(election)
+//                        }.toList()
+//                    }
+//                }
 
                 _upcomingElections.value = electionsReturned
                 Log.d("Elections View Model (Upcoming)", "Success: " + _upcomingElections.value!!.toList().toString())
