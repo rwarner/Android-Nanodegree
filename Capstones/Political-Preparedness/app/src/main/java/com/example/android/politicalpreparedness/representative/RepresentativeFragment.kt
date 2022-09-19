@@ -10,6 +10,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,19 +18,15 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
 import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListener
-import com.google.android.material.appbar.AppBarLayout
+import com.example.android.politicalpreparedness.representative.adapter.setNewValue
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
@@ -117,6 +114,48 @@ class RepresentativeFragment : Fragment() {
         setupFieldsForAddress()
 
         return binding.root
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState)
+
+        // Save fields to bundle
+        savedInstanceState.putString("addressLine1", binding.fragmentRepresentativeEditTextAddressLine1.text.toString())
+        savedInstanceState.putString("addressLine2", binding.fragmentRepresentativeEditTextAddressLine2.text.toString())
+        savedInstanceState.putString("city", binding.fragmentRepresentativeEditTextCity.text.toString())
+        savedInstanceState.putString("state", binding.fragmentRepresentativeSpinnerState.selectedItem.toString())
+        savedInstanceState.putString("zip", binding.fragmentRepresentativeEditTextZip.text.toString())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+
+
+        // Restore fields from bundle
+        var restoredAddress = Address("", "", "", "", "")
+
+        savedInstanceState?.let { bundleSaved ->
+            bundleSaved.getString("addressLine1")?.let { addressLine1 ->
+                restoredAddress.line1 = addressLine1
+            }
+
+            bundleSaved.getString("addressLine2")?.let { addressLine2 ->
+                restoredAddress.line2 = addressLine2
+            }
+
+            bundleSaved.getString("city")?.let { city ->
+                restoredAddress.city = city
+            }
+
+            bundleSaved.getString("state")?.let { state ->
+                restoredAddress.state = state
+            }
+            bundleSaved.getString("zip")?.let { zip ->
+                restoredAddress.zip = zip
+            }
+        }
+
+        representativeViewModel.setAddress(restoredAddress)
     }
 
     /**
