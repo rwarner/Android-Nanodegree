@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:motion="http://schemas.android.com/tools">
+
+    <!-- A transition describes an animation via start and end state -->
+    <Transition
+        app:constraintSetStart="@+id/start"
+        app:constraintSetEnd="@id/end">
+        <OnSwipe
+            app:dragDirection="dragUp"
+            app:onTouchUp="stop"
+            app:touchAnchorId="@id/fragment_representative_recyclerView_myReps" />
+    </Transition>
+
+
+    <!-- Constraints to apply at the start of the animation -->
+    <ConstraintSet android:id="@+id/start">
+<!--        <Constraint-->
+<!--            android:id="@+id/fragment_representative_formLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintTop_toTopOf="parent"/>-->
+    </ConstraintSet>
+
+
+    <!-- Constraints to apply at the end of the animation -->
+    <ConstraintSet android:id="@+id/end">
+<!--        <Constraint-->
+<!--            android:id="@+id/fragment_representative_formLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toTopOf="parent"/>-->
+    </ConstraintSet>
+
+</MotionScene>

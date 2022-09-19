@@ -103,7 +103,7 @@ class RepresentativeFragment : Fragment() {
             address.append(", ")
             address.append(binding.fragmentRepresentativeEditTextCity.text)
             address.append(", ")
-            address.append(binding.fragmentRepresentativeEditTextState.selectedItem.toString())
+            address.append(binding.fragmentRepresentativeSpinnerState.selectedItem.toString())
             address.append(" ")
             address.append(binding.fragmentRepresentativeEditTextZip.text)
 
@@ -129,8 +129,8 @@ class RepresentativeFragment : Fragment() {
             binding.fragmentRepresentativeEditTextAddressLine2.setText(it.line2)
 
             // Set the spinner value
-            binding.fragmentRepresentativeEditTextState.setSelection(
-                (binding.fragmentRepresentativeEditTextState.adapter as ArrayAdapter<String?>).getPosition(
+            binding.fragmentRepresentativeSpinnerState.setSelection(
+                (binding.fragmentRepresentativeSpinnerState.adapter as ArrayAdapter<String?>).getPosition(
                     it.state
                 )
             )

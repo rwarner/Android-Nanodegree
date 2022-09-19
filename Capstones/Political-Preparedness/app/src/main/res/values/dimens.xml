@@ -17,5 +17,8 @@
     <dimen name="empty_size">0dp</dimen>
     <dimen name="profile_size">50dp</dimen>
     <dimen name="social_size">35dp</dimen>
+    <dimen name="state_spinner_size">125dp</dimen>
+
+
 
 </resources>

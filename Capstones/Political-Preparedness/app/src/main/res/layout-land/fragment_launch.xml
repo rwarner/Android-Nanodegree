@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.android.politicalpreparedness.MainActivity">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/fragment_launch_imageview_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/empty_size"
+            android:src="@drawable/ballot_logo"
+            android:layout_margin="@dimen/medium_margin"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_launch_button_upcomingElection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/fragment_launch_button_upcomingElection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/small_margin"
+            style="@style/App_Button_Primary"
+            android:text="@string/fragment_launch_upcoming_elections"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_launch_button_findMyRepresentatives"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_launch_button_findMyRepresentatives"
+            app:layout_constraintStart_toStartOf="@+id/fragment_launch_button_findMyRepresentatives" />
+
+        <Button
+            android:id="@+id/fragment_launch_button_findMyRepresentatives"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/large_margin"
+            android:layout_marginEnd="@dimen/large_margin"
+            android:layout_marginBottom="@dimen/standard_margin"
+            style="@style/App_Button_Primary"
+            android:text="@string/fragment_launch_find_my_representatives"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

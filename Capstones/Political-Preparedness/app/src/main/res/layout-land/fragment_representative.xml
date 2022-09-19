@@ -23,12 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity"
-        app:layoutDescription="@xml/fragment_representative_scene">
+        app:layoutDescription="@xml/fragment_representative_scene_land">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/fragment_representative_formLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/empty_size"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_representative_land_outerGuideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -37,70 +39,78 @@
                 style="@style/App_Text_Header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/standard_margin"
+                android:layout_marginTop="@dimen/small_margin"
+                android:layout_marginLeft="@dimen/standard_margin"
+                android:layout_marginBottom="@dimen/standard_margin"
                 android:text="@string/fragment_representative_representative_search"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/fragment_representative_editText_addressLine1"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/empty_size"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/xs_margin"
+                android:layout_marginEnd="@dimen/xs_margin"
                 android:autofillHints=""
                 android:hint="Address Line 1"
                 android:inputType="textPostalAddress"
                 android:text="@{address.line1}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_representative_textView_searchHeader" />
 
             <EditText
                 android:id="@+id/fragment_representative_editText_addressLine2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/empty_size"
+                android:layout_width="@dimen/empty_size"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/xs_margin"
+                android:layout_marginEnd="@dimen/xs_margin"
                 android:autofillHints=""
                 android:hint="Address Line 2"
                 android:inputType="textPostalAddress"
                 android:text="@{address.line2}"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_addressLine1" />
 
             <EditText
                 android:id="@+id/fragment_representative_editText_city"
-                android:layout_width="@dimen/empty_size"
+                android:layout_width="@dimen/xl_margin"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:hint="City"
                 android:inputType="textPostalAddress"
                 android:text="@{address.city}"
-                app:layout_constraintEnd_toStartOf="@id/fragment_representative_spinner_state"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/fragment_representative_editText_addressLine2"
                 app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_addressLine2" />
 
             <Spinner
                 android:id="@+id/fragment_representative_spinner_state"
                 android:layout_width="@dimen/empty_size"
-                android:layout_height="@dimen/empty_size"
+                android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:entries="@array/states"
                 android:inputType="textPostalAddress"
-                app:layout_constraintBottom_toBottomOf="@id/fragment_representative_editText_city"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/fragment_representative_editText_city"
-                app:layout_constraintTop_toTopOf="@id/fragment_representative_editText_city"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_representative_editText_city"
+                app:layout_constraintEnd_toStartOf="@id/fragment_representative_editText_zip"
+                app:layout_constraintStart_toEndOf="@+id/fragment_representative_editText_city"
+                app:layout_constraintTop_toTopOf="@+id/fragment_representative_editText_city"
                 app:stateValue="@{address.state}" />
 
             <EditText
                 android:id="@+id/fragment_representative_editText_zip"
-                android:layout_width="@dimen/empty_size"
+                android:layout_width="@dimen/large_margin"
                 android:layout_height="wrap_content"
                 android:autofillHints=""
                 android:hint="Zip"
                 android:inputType="number"
                 android:maxLength="5"
                 android:text="@{address.zip}"
-                app:layout_constraintEnd_toEndOf="@id/fragment_representative_editText_city"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fragment_representative_editText_city" />
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_representative_editText_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/fragment_representative_spinner_state"
+                app:layout_constraintTop_toTopOf="@+id/fragment_representative_editText_city" />
 
             <Button
                 android:id="@+id/fragment_representative_button_findMyRep"
@@ -122,24 +132,32 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/fragment_representative_land_outerGuideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
         <TextView
             android:id="@+id/fragment_representative_textView_myRep_header"
             style="@style/App_Text_Header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/xs_margin"
             android:layout_marginLeft="@dimen/standard_margin"
-            android:layout_marginBottom="@dimen/standard_margin"
+            android:layout_marginTop="@dimen/xs_margin"
             android:text="@string/fragment_representative_my_representatives"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_representative_formLayout" />
+            app:layout_constraintStart_toStartOf="@id/fragment_representative_land_outerGuideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_representative_recyclerView_myReps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@id/fragment_representative_formLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/empty_size"
             app:layout_constraintTop_toBottomOf="@id/fragment_representative_textView_myRep_header"
+            app:layout_constraintStart_toStartOf="@id/fragment_representative_land_outerGuideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center"
             android:textAlignment="center"
             app:listData="@{representativeViewModel.listOfRepresentatives}"
